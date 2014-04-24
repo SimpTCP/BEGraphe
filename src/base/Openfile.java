@@ -29,7 +29,7 @@ public class Openfile {
 
 	// Si vous utilisez votre propre dossier pour les donnees, mettez-le ici.
 	"Paths",
-    } ;
+    };
 
     // Extension testees. Garder l'extension vide dans la liste.
     private static final String[] extensions = { ".map", ".gz", ".map.gz", ".path", ".path.gz", "" } ;
