@@ -13,7 +13,7 @@ public class Sommet {
 		super();
 		RoutesSortantes = new ArrayList<Arc>();
 	}
-
+	
 	public ArrayList<Arc> getRoutesSortantes() {
 		return RoutesSortantes;
 	}

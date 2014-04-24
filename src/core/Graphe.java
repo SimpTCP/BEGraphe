@@ -51,6 +51,15 @@ public class Graphe {
 		return numzone ;
 	}
 
+	public String toString()
+	{
+		String ret = "";
+		ret += "Graphe avec :\n";
+		ret += "\t- sommets :" + this.sommets.size();
+		ret += "\n\t- descripteurs : " + this.descripteurs.size();
+		return ret;
+	}
+	
 	// Le constructeur cree le graphe en lisant les donnees depuis le DataInputStream
 	public Graphe (String nomCarte, DataInputStream dis, Dessin dessin) {
 
@@ -152,7 +161,8 @@ public class Graphe {
 			Utils.checkByte(253, dis) ;
 
 			System.out.println("Fichier lu ("+this.nomCarte+"): " + nb_nodes + " sommets, " + edges + " arc, " 
-					+ nb_descripteurs + " descripteurs.") ;
+					+ nb_descripteurs + " descripteurs.");
+			System.out.println(this);
 
 		} catch (IOException e) {
 			e.printStackTrace() ;
