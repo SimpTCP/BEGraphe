@@ -1,14 +1,14 @@
 package core ;
 
-/**
- *   Classe representant un graphe.
- *   A vous de completer selon vos choix de conception.
- */
 
-import java.io.* ;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import base.* ;
+import base.Couleur;
+import base.Descripteur;
+import base.Dessin;
+import base.Utils;
 
 public class Graphe {
 
@@ -18,7 +18,7 @@ public class Graphe {
 	// Fenetre graphique
 	private final Dessin dessin ;
 
-	// Version du format MAP utilise'.
+	// Version du format MAP utilisé.
 	private static final int version_map = 4 ;
 	private static final int magic_number_map = 0xbacaff ;
 
@@ -36,18 +36,20 @@ public class Graphe {
 	 * Ces attributs constituent une structure ad-hoc pour stocker les informations du graphe.
 	 * Vous devez modifier et ameliorer ce choix de conception simpliste.
 	 */
-
-	private Descripteur[] descripteurs;
-	private ArrayList<Sommet> Sommets;
-	private ArrayList<Descripteur> Descripteurs;
+	// ArrayList contenant tous nos sommets
+	private ArrayList<Sommet> sommets;
+	// ArrayList contenant tous nos descripteurs de path
+	private ArrayList<Descripteur> descripteurs;
 	private int nombreSommets;
 	private int nombreDescripteurs;
 
+	public Dessin getDessin() {
+		return dessin;
+	}
 
-
-	// Deux malheureux getters.
-	public Dessin getDessin() { return dessin ; }
-	public int getZone() { return numzone ; }
+	public int getZone() {
+		return numzone ;
+	}
 
 	// Le constructeur cree le graphe en lisant les donnees depuis le DataInputStream
 	public Graphe (String nomCarte, DataInputStream dis, Dessin dessin) {
@@ -55,10 +57,10 @@ public class Graphe {
 		this.nomCarte = nomCarte ;
 		this.dessin = dessin ;
 		Utils.calibrer(nomCarte, dessin) ;
-		
+
 		//init des arraylist
-		this.Sommets = new ArrayList<Sommet>();
-		this.Descripteurs = new ArrayList<Descripteur>();
+		this.sommets = new ArrayList<Sommet>();
+		this.descripteurs = new ArrayList<Descripteur>();
 		// Lecture du fichier MAP. 
 		// Voir le fichier "FORMAT" pour le detail du format binaire.
 		try {
@@ -79,95 +81,77 @@ public class Graphe {
 			int nb_descripteurs = dis.readInt () ;
 			int nb_nodes = dis.readInt () ;
 
-			// Nombre de successeurs enregistrés dans le fichier.
-			int[] nsuccesseurs_a_lire = new int[nb_nodes] ;
-
 			// ---------------------------------------------------------------
 			//Fixe nombre sommets et nombres de descripteurs
-			this.setNombreSommets(nb_nodes);
-			this.setNombreDescripteurs(nb_descripteurs);
+			this.nombreSommets = nb_nodes;
+			this.nombreDescripteurs = nb_descripteurs;
 
 			// Lecture des noeuds
 			for (int num_node = 0 ; num_node < nb_nodes ; num_node++) {
-				// Intégration chépa Sommets du noeud numero num_node
 				Sommet s = new Sommet();
 				s.setLongitude(((float)dis.readInt ()) / 1E6f) ;
 				s.setLatitude(((float)dis.readInt ()) / 1E6f) ;
 				s.setNombreRouteSortante((char) dis.readUnsignedByte()) ;
-				this.Sommets.add(s);
+				this.sommets.add(s);
 			}
 
 			Utils.checkByte(255, dis) ;
 
 			// Lecture des descripteurs
 			for (int num_descr = 0 ; num_descr < nb_descripteurs ; num_descr++) {
-				// int�gration � Descripteurs du descripteur numero num_descr
 				Descripteur d = new Descripteur(dis);
-				Descripteurs.add(d);
-
-				// On affiche quelques descripteurs parmi tous.
-				if (0 == num_descr % (1 + nb_descripteurs / 400))
-					System.out.println("Descripteur " + num_descr + " = " + this.Descripteurs.get(num_descr)) ;
+				this.descripteurs.add(d);
 			}
 
 			Utils.checkByte(254, dis) ;
 
-			// Lecture des successeurs
-			for (int num_node = 0 ; num_node < nb_nodes ; num_node++) {
-				// Lecture de tous les successeurs du noeud num_node
-				//Création des Arcs
-				for (int num_succ = 0 ; num_succ < this.Sommets.get(num_node).getNombreRouteSortante(); num_succ++) {
+			for(Sommet s : this.sommets)
+			{
+				for(int num_succ = 0; num_succ < s.getNombreRouteSortante(); num_succ++)
+				{
 					Arc a = new Arc();
-					// zone du successeur
-					a.setZoneDeDestination((char) dis.readUnsignedByte()); 
-
-					// numero de noeud du successeur
-
-					a.setSommetArrivee(this.Sommets.get(Utils.read24bits(dis)));
-
-					// descripteur de l'arete
-					a.setDescripteur(this.Descripteurs.get(Utils.read24bits(dis)));
-				
-					// longueur de l'arete en metres
-					a.setLongueur(dis.readUnsignedShort()) ;
+					a.setZoneDeDestination((char) dis.readUnsignedByte());
+					a.setDestination(this.sommets.get(Utils.read24bits(dis)));
+					a.setDescripteur(this.descripteurs.get(Utils.read24bits(dis)));
+					a.setLongueur(dis.readUnsignedShort());
 					edges++;
-					//Création du symétrique si la route est à double sens
-					if(!a.getDescripteur().isSensUnique()){
+					
+					s.addRouteSortante(a);
+					
+					// Création du symétrique si la route est à double sens
+					if(!a.getDescripteur().isSensUnique())
+					{
 						Arc b = new Arc();
 						b.setDescripteur(a.getDescripteur());
 						b.setLongueur(a.getLongueur());
 						b.setZoneDeDestination(a.getZoneDeDestination());
-						b.setSommetArrivee(this.Sommets.get(num_node));
-						a.getSommetArrivee().addRouteSortante(b);
+						b.setDestination(s);
+						a.getDestination().addRouteSortante(b);
 						edges++;
 					}
-					// On pioupiou
-					int nb_segm = dis.readUnsignedShort() ;
-
-
+					
+					// lecture des segments
+					int nb_segm = dis.readUnsignedShort();
 					Couleur.set(dessin, a.getDescripteur().getType());
-
-					float current_long = this.Sommets.get(num_node).getLongitude();
-					float current_lat  = this.Sommets.get(num_node).getLatitude();
-
-					// Chaque segment est dessine'
-					for (int i = 0 ; i < nb_segm ; i++) {
-						float delta_lon = (dis.readShort()) / 2.0E5f ;
-						float delta_lat = (dis.readShort()) / 2.0E5f ;
-						dessin.drawLine(current_long, current_lat, (current_long + delta_lon), (current_lat + delta_lat)) ;
-						current_long += delta_lon ;
-						current_lat  += delta_lat ;
+					float current_long = s.getLongitude();
+					float current_lat = s.getLatitude();
+					for(int i=0; i<nb_segm; i++)
+					{
+						float delta_lon = (dis.readShort())/2.0E5f;
+						float delta_lat = (dis.readShort())/2.0E5f;
+						dessin.drawLine(current_long, current_lat, (current_long+delta_lon), (current_lat+delta_lat));
+						current_long += delta_lon;
+						current_lat += delta_lat;
 					}
-
-					// Le dernier trait rejoint le sommet destination.
-					// On le dessine si le noeud destination est dans la zone du graphe courant.
-						dessin.drawLine(current_long, current_lat, a.getSommetArrivee().getLongitude(), a.getSommetArrivee().getLatitude()) ;
+					
+					dessin.drawLine(current_long, current_lat, a.getDestination().getLongitude(), a.getDestination().getLatitude());
+					
 				}
 			}
 
 			Utils.checkByte(253, dis) ;
 
-			System.out.println("Fichier lu : " + nb_nodes + " sommets, " + edges + " arc, " 
+			System.out.println("Fichier lu ("+this.nomCarte+"): " + nb_nodes + " sommets, " + edges + " arc, " 
 					+ nb_descripteurs + " descripteurs.") ;
 
 		} catch (IOException e) {
@@ -213,14 +197,15 @@ public class Graphe {
 
 			// On cherche le noeud le plus proche. O(n)
 			float minDist = Float.MAX_VALUE ;
-			int   noeud   = 0 ;
+			Sommet noeud = this.sommets.get(0);
 
-			for (int num_node = 0 ; num_node < this.nombreSommets ; num_node++) {
-				float londiff = (this.Sommets.get(num_node).getLongitude() - lon) ;
-				float latdiff = (this.Sommets.get(num_node).getLatitude() - lat) ;
+			for(Sommet s : this.sommets)
+			{
+				float londiff = (s.getLongitude() - lon);
+				float latdiff = (s.getLatitude() - lat);
 				float dist = londiff*londiff + latdiff*latdiff ;
 				if (dist < minDist) {
-					noeud = num_node ;
+					noeud = s ;
 					minDist = dist ;
 				}
 			}
@@ -228,7 +213,7 @@ public class Graphe {
 			System.out.println("Noeud le plus proche : " + noeud) ;
 			System.out.println() ;
 			dessin.setColor(java.awt.Color.red) ;
-			dessin.drawPoint(Sommets.get(noeud).getLongitude(), Sommets.get(noeud).getLatitude(), 5) ;
+			dessin.drawPoint(noeud.getLongitude(), noeud.getLatitude(), 5) ;
 		}
 	}
 
@@ -287,16 +272,16 @@ public class Graphe {
 
 	}
 	public ArrayList<Sommet> getSommets() {
-		return Sommets;
+		return this.sommets;
 	}
 	public void setSommets(ArrayList<Sommet> sommets) {
-		Sommets = sommets;
+		this.sommets = sommets;
 	}
 	public ArrayList<Descripteur> getDescripteurs() {
-		return Descripteurs;
+		return this.descripteurs;
 	}
 	public void setDescripteurs(ArrayList<Descripteur> descripteurs) {
-		Descripteurs = descripteurs;
+		this.descripteurs = descripteurs;
 	}
 	public int getNombreSommets() {
 		return nombreSommets;
