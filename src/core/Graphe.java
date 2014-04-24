@@ -59,7 +59,7 @@ public class Graphe {
 		ret += "\n\t- descripteurs : " + this.descripteurs.size();
 		return ret;
 	}
-	
+
 	// Le constructeur cree le graphe en lisant les donnees depuis le DataInputStream
 	public Graphe (String nomCarte, DataInputStream dis, Dessin dessin) {
 
@@ -124,9 +124,9 @@ public class Graphe {
 					a.setDescripteur(this.descripteurs.get(Utils.read24bits(dis)));
 					a.setLongueur(dis.readUnsignedShort());
 					edges++;
-					
+
 					s.addRouteSortante(a);
-					
+
 					// Création du symétrique si la route est à double sens
 					if(!a.getDescripteur().isSensUnique())
 					{
@@ -138,7 +138,7 @@ public class Graphe {
 						a.getDestination().addRouteSortante(b);
 						edges++;
 					}
-					
+
 					// lecture des segments
 					int nb_segm = dis.readUnsignedShort();
 					Couleur.set(dessin, a.getDescripteur().getType());
@@ -152,9 +152,9 @@ public class Graphe {
 						current_long += delta_lon;
 						current_lat += delta_lat;
 					}
-					
+
 					dessin.drawLine(current_long, current_lat, a.getDestination().getLongitude(), a.getDestination().getLatitude());
-					
+
 				}
 			}
 
@@ -236,19 +236,19 @@ public class Graphe {
 		try {
 
 			// Verification du magic number et de la version du format du fichier .path
-			int magic = dis.readInt () ;
-			int version = dis.readInt () ;
+			int magic = dis.readInt();
+			int version = dis.readInt();
 			Utils.checkVersion(magic, magic_number_path, version, version_path, nom_chemin, ".path") ;
 
 			// Lecture de l'identifiant de carte
-			int path_carte = dis.readInt () ;
+			int path_carte = dis.readInt();
 
 			if (path_carte != this.idcarte) {
 				System.out.println("Le chemin du fichier " + nom_chemin + " n'appartient pas a la carte actuellement chargee." ) ;
 				System.exit(1) ;
 			}
 
-			int nb_noeuds = dis.readInt () ;
+			int nb_noeuds = dis.readInt();
 
 			// Origine du chemin
 			int first_zone = dis.readUnsignedByte() ;
