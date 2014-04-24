@@ -10,6 +10,16 @@ public class Arc {
 	private char zoneDeDestination;
 
 
+	public String toString(){
+		return "longueur : "+longueur+" vitessemax : "+descripteur.vitesseMax()+"";
+	}
+	public long tempsParcours(){
+		float pitou;
+		pitou = ((float)longueur)/((float)(this.descripteur.vitesseMax())*1000);
+		pitou*= 3600000;
+		return ((long)pitou);
+	}
+
 	public Descripteur getDescripteur() {
 		return descripteur;
 	}

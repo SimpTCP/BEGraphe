@@ -282,6 +282,9 @@ public class Graphe {
 				System.out.println("Le chemin " + nom_chemin + " ne termine pas sur le bon noeud.") ;
 				System.exit(1) ;
 			}
+			
+			this.chemins.add(chemin);
+			System.out.println(chemin.coutChemin());
 
 		} catch (IOException e) {
 			e.printStackTrace() ;

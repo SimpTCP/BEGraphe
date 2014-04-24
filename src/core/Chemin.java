@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Chemin {
 
@@ -14,9 +15,9 @@ public class Chemin {
 		this.sommets = new ArrayList<Sommet>();
 	}
 	
-	public float coutChemin(){
-		int k, tempTemps;
-		float cout;
+	public long coutChemin(){
+		int k, DEBUG;
+		long cout;
 		Sommet tempSrc = new Sommet();
 		Sommet tempDst = new Sommet();
 		Arc tempArc = new Arc();
@@ -25,8 +26,7 @@ public class Chemin {
 			tempSrc = sommets.get(k);
 			tempDst = sommets.get(k+1);
 			tempArc = tempSrc.arcToSommet(tempDst);
-			tempTemps = tempArc.getLongueur()/(1000*tempArc.getDescripteur().vitesseMax());
-			cout += tempTemps;
+			cout += tempArc.tempsParcours();
 		}
 		return cout;
 	}
