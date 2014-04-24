@@ -1,5 +1,6 @@
 package core;
 
+import base.Dessin;
 import base.Descripteur;
 
 public class Arc {
@@ -19,7 +20,7 @@ public class Arc {
 		pitou*= 3600000;
 		return ((long)pitou);
 	}
-
+	
 	public Descripteur getDescripteur() {
 		return descripteur;
 	}

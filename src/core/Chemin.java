@@ -1,7 +1,9 @@
 package core;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
+
+import base.Dessin;
 
 public class Chemin {
 
@@ -29,6 +31,21 @@ public class Chemin {
 			cout += tempArc.tempsParcours();
 		}
 		return cout;
+	}
+	
+	public void dessinChemin(Dessin dessin){
+		int k;
+		dessin.setColor(Color.blue);
+		this.source.drawSommet(10, dessin);
+		this.destination.drawSommet(10, dessin);
+		Sommet tempSrc = new Sommet();
+		Sommet tempDst = new Sommet();
+		for(k=1; k<sommets.size()-1;k++){
+			tempSrc = this.sommets.get(k);
+			tempDst = this.sommets.get(k+1);
+			dessin.drawLine(tempSrc.getLongitude(), tempSrc.getLatitude(), tempDst.getLongitude(), tempDst.getLatitude());
+		}
+		
 	}
 	
 	public int getNbrNoeuds() {

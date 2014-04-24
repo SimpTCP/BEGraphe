@@ -2,6 +2,8 @@ package core;
 
 import java.util.ArrayList;
 
+import base.Dessin;
+
 public class Sommet {
 
 	private ArrayList<Arc> RoutesSortantes;
@@ -31,6 +33,12 @@ public class Sommet {
 		}
 		return arc;
 	}
+	
+	public void drawSommet(int taille, Dessin dessin){
+		System.out.println("icicicici");
+		dessin.drawPoint(longitude,latitude,taille);
+	}
+
 	
 	public ArrayList<Arc> getRoutesSortantes() {
 		return RoutesSortantes;

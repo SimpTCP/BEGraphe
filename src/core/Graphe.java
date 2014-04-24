@@ -285,6 +285,7 @@ public class Graphe {
 			
 			this.chemins.add(chemin);
 			System.out.println(chemin.coutChemin());
+			chemin.dessinChemin(dessin);
 
 		} catch (IOException e) {
 			e.printStackTrace() ;
