@@ -7,13 +7,20 @@ public class Sommet {
 	private ArrayList<Arc> RoutesSortantes;
 	private float latitude;
 	private float longitude;
-	private char nombreRouteSortante;
+	private int nombreRouteSortante;
 
 	public Sommet() {
 		super();
 		RoutesSortantes = new ArrayList<Arc>();
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Sommet [RoutesSortantes=" + RoutesSortantes + ", latitude="
+				+ latitude + ", longitude=" + longitude
+				+ ", nombreRouteSortante=" + nombreRouteSortante + "]";
+	}
+
 	public ArrayList<Arc> getRoutesSortantes() {
 		return RoutesSortantes;
 	}
@@ -38,16 +45,16 @@ public class Sommet {
 		this.longitude = longitude;
 	}
 
-	public char getNombreRouteSortante() {
-		return nombreRouteSortante;
-	}
-
-	public void setNombreRouteSortante(char nombreRouteSortante) {
-		this.nombreRouteSortante = nombreRouteSortante;
-	}
-
 	public void addRouteSortante(Arc arc){
 		this.RoutesSortantes.add(arc);
 	}
 
+	public int getNombreRouteSortante() {
+		return nombreRouteSortante;
+	}
+
+	public void setNombreRouteSortante(int nombreRouteSortante) {
+		this.nombreRouteSortante = nombreRouteSortante;
+	}
+	
 }

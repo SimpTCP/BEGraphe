@@ -10,6 +10,10 @@ public class Chemin {
 	private Sommet destination;
 	private ArrayList<Sommet> sommets;
 	
+	public Chemin() {
+		this.sommets = new ArrayList<Sommet>();
+	}
+	
 	public int getNbrNoeuds() {
 		return nbrNoeuds;
 	}
@@ -41,6 +45,9 @@ public class Chemin {
 		this.sommets = sommets;
 	}
 	
-	
+	public void addSommet(Sommet s)
+	{
+		this.sommets.add(s);
+	}
 	
 }

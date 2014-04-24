@@ -40,6 +40,7 @@ public class Graphe {
 	private ArrayList<Sommet> sommets;
 	// ArrayList contenant tous nos descripteurs de path
 	private ArrayList<Descripteur> descripteurs;
+	private ArrayList<Chemin> chemins;
 	private int nombreSommets;
 	private int nombreDescripteurs;
 
@@ -70,6 +71,7 @@ public class Graphe {
 		//init des arraylist
 		this.sommets = new ArrayList<Sommet>();
 		this.descripteurs = new ArrayList<Descripteur>();
+		this.chemins = new ArrayList<Chemin>();
 		// Lecture du fichier MAP. 
 		// Voir le fichier "FORMAT" pour le detail du format binaire.
 		try {
@@ -240,34 +242,40 @@ public class Graphe {
 			int version = dis.readInt();
 			Utils.checkVersion(magic, magic_number_path, version, version_path, nom_chemin, ".path") ;
 
+			Chemin chemin = new Chemin();
+			
 			// Lecture de l'identifiant de carte
-			int path_carte = dis.readInt();
+			chemin.setIdCarte(dis.readInt());
 
-			if (path_carte != this.idcarte) {
-				System.out.println("Le chemin du fichier " + nom_chemin + " n'appartient pas a la carte actuellement chargee." ) ;
-				System.exit(1) ;
+			if (chemin.getIdCarte() != this.idcarte) {
+				System.out.println("Le chemin du fichier " + nom_chemin + " n'appartient pas a la carte actuellement chargee." );
+				System.exit(1);
 			}
 
-			int nb_noeuds = dis.readInt();
+			chemin.setNbrNoeuds(dis.readInt());
 
 			// Origine du chemin
-			int first_zone = dis.readUnsignedByte() ;
-			int first_node = Utils.read24bits(dis) ;
+			int first_zone = dis.readUnsignedByte();
+			int first_node = Utils.read24bits(dis);
+			chemin.setSource(this.sommets.get(first_node));
 
 			// Destination du chemin
-			int last_zone  = dis.readUnsignedByte() ;
-			int last_node = Utils.read24bits(dis) ;
+			int last_zone  = dis.readUnsignedByte();
+			int last_node = Utils.read24bits(dis);
+			chemin.setDestination(this.sommets.get(last_node));
 
-			System.out.println("Chemin de " + first_zone + ":" + first_node + " vers " + last_zone + ":" + last_node) ;
+			System.out.println("Chemin de ("+chemin.getNbrNoeuds()+" sommets):" + chemin.getSource() + " vers " + chemin.getDestination());
 
-			int current_zone = 0 ;
-			int current_node = 0 ;
-
+			int current_zone = 0;
+			int current_node = 0;
+			Sommet s = new Sommet();
 			// Tous les noeuds du chemin
-			for (int i = 0 ; i < nb_noeuds ; i++) {
-				current_zone = dis.readUnsignedByte() ;
-				current_node = Utils.read24bits(dis) ;
-				System.out.println(" --> " + current_zone + ":" + current_node) ;
+			for (int i = 0 ; i < chemin.getNbrNoeuds() ; i++) {
+				current_zone = dis.readUnsignedByte();
+				current_node = Utils.read24bits(dis);
+				s = this.sommets.get(current_node);
+				chemin.addSommet(s);
+				System.out.println(" --> " + s);
 			}
 
 			if ((current_zone != last_zone) || (current_node != last_node)) {
