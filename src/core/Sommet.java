@@ -20,7 +20,18 @@ public class Sommet {
 				+ latitude + ", longitude=" + longitude
 				+ ", nombreRouteSortante=" + nombreRouteSortante + "]";
 	}
-
+	
+	public Arc arcToSommet(Sommet s){
+		Arc arc = null;
+		for(Arc a : this.RoutesSortantes){
+			if(a.getDestination()==s){
+				arc = a;
+				break;
+			}
+		}
+		return arc;
+	}
+	
 	public ArrayList<Arc> getRoutesSortantes() {
 		return RoutesSortantes;
 	}

@@ -14,6 +14,23 @@ public class Chemin {
 		this.sommets = new ArrayList<Sommet>();
 	}
 	
+	public float coutChemin(){
+		int k, tempTemps;
+		float cout;
+		Sommet tempSrc = new Sommet();
+		Sommet tempDst = new Sommet();
+		Arc tempArc = new Arc();
+		cout = 0;
+		for(k=0; k<sommets.size()-1; k++){
+			tempSrc = sommets.get(k);
+			tempDst = sommets.get(k+1);
+			tempArc = tempSrc.arcToSommet(tempDst);
+			tempTemps = tempArc.getLongueur()/(1000*tempArc.getDescripteur().vitesseMax());
+			cout += tempTemps;
+		}
+		return cout;
+	}
+	
 	public int getNbrNoeuds() {
 		return nbrNoeuds;
 	}
