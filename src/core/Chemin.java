@@ -18,7 +18,7 @@ public class Chemin {
 	}
 	
 	public long coutChemin(){
-		int k, DEBUG;
+		int k;
 		long cout;
 		Sommet tempSrc = new Sommet();
 		Sommet tempDst = new Sommet();

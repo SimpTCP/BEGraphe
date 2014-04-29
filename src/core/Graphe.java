@@ -255,7 +255,7 @@ public class Graphe {
 			chemin.setNbrNoeuds(dis.readInt());
 
 			// Origine du chemin
-			int first_zone = dis.readUnsignedByte();
+			dis.readUnsignedByte();
 			int first_node = Utils.read24bits(dis);
 			chemin.setSource(this.sommets.get(first_node));
 

@@ -1,6 +1,5 @@
 package core;
 
-import base.Dessin;
 import base.Descripteur;
 
 public class Arc {
