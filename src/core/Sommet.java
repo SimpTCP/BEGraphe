@@ -20,7 +20,7 @@ public class Sommet {
 	public String toString() {
 		return "Sommet [RoutesSortantes=" + RoutesSortantes + ", latitude="
 				+ latitude + ", longitude=" + longitude
-				+ ", nombreRouteSortante=" + nombreRouteSortante + "]";
+				+ ", nombreRouteSortante=" + this.RoutesSortantes.size() + "]";
 	}
 	
 	public Arc arcToSommet(Sommet s){

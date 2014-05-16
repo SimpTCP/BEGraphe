@@ -154,6 +154,7 @@ public class BinaryHeap<E extends Comparable<E>> {
 		E minItem = findMin( );
 		E lastItem = this.array.get(--this.currentSize) ;
 		this.arraySet(0, lastItem) ;
+		this.positions.remove(minItem);
 		this.percolateDown( 0 );
 		return minItem;
 	}
@@ -163,7 +164,7 @@ public class BinaryHeap<E extends Comparable<E>> {
 	 */
 	public void print() {
 		System.out.println() ;
-		System.out.println("========  HEAP  (size = " + this.currentSize + ")  ========") ;
+		System.out.println("========  HEAP  (size = " + this.array.size() + ")  ========") ;
 		System.out.println() ;
 
 		for (E el : this.array) {
