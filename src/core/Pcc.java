@@ -20,7 +20,7 @@ public class Pcc extends Algo {
 
 	// Demander la zone et le sommet destination.
 	this.zoneOrigine = gr.getZone () ;
-	this.destination = readarg.lireInt ("Numero du sommet destination ? ");
+		this.destination = readarg.lireInt ("Numero du sommet destination ? ");
     }
 
     public void run() {
