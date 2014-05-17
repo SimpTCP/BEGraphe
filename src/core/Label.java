@@ -31,7 +31,7 @@ public class Label implements Comparable<Label>{
 		this.mark = false;
 		this.cout = cout;
 		this.padre = papaoutai;
-		this.setMoi(bibi);
+		this.moi = bibi;
 	}
 	
 	public boolean isMark() {

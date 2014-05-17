@@ -45,25 +45,21 @@ public class Pcc extends Algo {
 		
 		while(!this.labels.get(destination).isMark() && !tas.isEmpty())
 		{
-			tas.print();
+
 			currentLabel = tas.deleteMin();
 			currentSommet = currentLabel.getMoi();
 			currentLabel.setMark(true);
+
 			
-			System.out.println("currentLabel : " + currentLabel);
-			tas.print();
 			
 			for(Arc toFils: currentSommet.getRoutesSortantes()){
 				filsSommet = toFils.getDestination();
 				filsLabel = this.labels.get(filsSommet);
 				
-				System.out.println("fils : "+filsSommet);
-				
 				cout = currentLabel.getCout() + toFils.tempsParcours();
 				
 				if(filsLabel != null && filsLabel.isMark())
 				{
-					System.out.println("dja vu pd");
 					
 				}else{
 				
@@ -72,7 +68,6 @@ public class Pcc extends Algo {
 					filsLabel = label;
 					this.labels.put(filsSommet, filsLabel);
 					tas.insert(filsLabel);
-					System.out.println("J'ai inseré : " + filsLabel);
 				} else{
 					Label tmp = new Label();
 					tmp.setCout(cout);
@@ -80,10 +75,15 @@ public class Pcc extends Algo {
 					{
 						filsLabel.setCout(cout);
 						filsLabel.setPadre(currentSommet);
+						if(!tas.contains(filsLabel)){
+							tas.insert(filsLabel);
+						}
+						this.labels.put(filsSommet, filsLabel);
 						tas.update(filsLabel);
 					}
 				}
 				}
+				filsLabel = null;
 			}
 			this.graphe.getDessin().setColor(Color.blue);
 			this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), currentLabel.getPadre().getLongitude(), currentLabel.getPadre().getLatitude());

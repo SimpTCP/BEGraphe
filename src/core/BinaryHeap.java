@@ -34,8 +34,10 @@ public class BinaryHeap<E extends Comparable<E>> {
 
 	public void update(E element)
 	{
-		int index = positions.get(element);
-		this.percolateUp(index);
+		if(positions != null && element != null){
+			int index = positions.get(element);
+			this.percolateUp(index);
+		}
 	}
 	
 	// Sets an element in the array
@@ -45,8 +47,9 @@ public class BinaryHeap<E extends Comparable<E>> {
 		}
 		else {
 			this.array.set(index, value);
-			this.positions.put(value, index);
+			
 		}
+		this.positions.put(value, index);
 	}
 
 	/**
@@ -86,6 +89,13 @@ public class BinaryHeap<E extends Comparable<E>> {
 		this.percolateUp(index) ;
 	}
 
+	public boolean contains(E x){
+		boolean ret = false;
+		if (this.array.contains(x)){
+			ret = true;
+		}
+		return ret;
+	}
 	/**
 	 * Internal method to percolate up in the heap.
 	 * @param index the index at which the percolate begins.
@@ -152,7 +162,7 @@ public class BinaryHeap<E extends Comparable<E>> {
 	 */
 	public E deleteMin( ) {
 		E minItem = findMin( );
-		E lastItem = this.array.get(--this.currentSize) ;
+		E lastItem = this.array.remove(--this.currentSize) ;
 		this.arraySet(0, lastItem) ;
 		this.positions.remove(minItem);
 		this.percolateDown( 0 );
