@@ -96,6 +96,11 @@ public class Pcc extends Algo {
 		}
 		else{
 			System.out.println("Ouais c'est cool tiens mon boudin, Cout de "+origine+" à "+destination+" : "+cout);
+			currentSommet = destination;
+			while(currentSommet!=origine){
+				System.out.println(currentSommet);
+				currentSommet = labels.get(currentSommet).getPadre();
+			}
 		}
 	}
 

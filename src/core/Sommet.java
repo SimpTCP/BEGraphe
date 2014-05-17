@@ -10,6 +10,15 @@ public class Sommet {
 	private float latitude;
 	private float longitude;
 	private int nombreRouteSortante;
+	private int entierSommet;
+
+	public int getEntierSommet() {
+		return entierSommet;
+	}
+
+	public void setEntierSommet(int entierSommet) {
+		this.entierSommet = entierSommet;
+	}
 
 	public Sommet() {
 		super();
@@ -18,7 +27,7 @@ public class Sommet {
 
 	@Override
 	public String toString() {
-		return "Sommet [RoutesSortantes=" + RoutesSortantes + ", latitude="
+		return "Sommet "+entierSommet+" [RoutesSortantes=" + RoutesSortantes + ", latitude="
 				+ latitude + ", longitude=" + longitude
 				+ ", nombreRouteSortante=" + this.RoutesSortantes.size() + "]";
 	}

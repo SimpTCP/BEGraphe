@@ -103,6 +103,7 @@ public class Graphe {
 				s.setLongitude(((float)dis.readInt ()) / 1E6f) ;
 				s.setLatitude(((float)dis.readInt ()) / 1E6f) ;
 				s.setNombreRouteSortante((char) dis.readUnsignedByte()) ;
+				s.setEntierSommet(num_node);
 				this.sommets.add(s);
 			}
 
