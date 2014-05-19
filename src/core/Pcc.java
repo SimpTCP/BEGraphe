@@ -13,8 +13,8 @@ public class Pcc extends Algo {
 	private BinaryHeap<Label> tas;
 	private HashMap<Sommet, Label> labels;
 
-	public Pcc(Graphe gr, PrintStream sortie, Readarg readarg) {
-		super(gr, sortie, readarg) ;
+	public Pcc(Graphe gr, Readarg readarg) {
+		super(gr, readarg) ;
 
 		do {
 			System.out.println("Un truc qui va qq part pleaaase");
@@ -29,6 +29,10 @@ public class Pcc extends Algo {
 		this.tas = new BinaryHeap<Label>();
 	}
 
+	public Pcc(Graphe gr, PrintStream fichierSortie, Readarg readarg) {
+		this(gr, readarg);
+	}
+	
 	public void run() {
 		
 		long cout;

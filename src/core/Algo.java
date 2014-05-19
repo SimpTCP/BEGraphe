@@ -12,8 +12,12 @@ public abstract class Algo {
     protected Graphe graphe ;
     
     protected Algo(Graphe gr, PrintStream fichierSortie, Readarg readarg) {
-	this.graphe = gr ;
-	this.sortie = fichierSortie ;	
+    	this.graphe = gr ;
+    	this.sortie = fichierSortie ;	
+    }
+    
+    protected Algo(Graphe gr, Readarg readarg) {
+    	this.graphe = gr ;
     }
     
     public abstract void run() ;
