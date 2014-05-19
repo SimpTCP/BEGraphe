@@ -91,8 +91,11 @@ public class Pcc extends Algo {
 		else{
 			System.out.println("Ouais c'est cool tiens mon boudin, Cout de "+origine+" à "+destination+" : "+cout);
 			currentSommet = destination;
-			while(currentSommet!=origine){
+			while(currentSommet != origine){
 				System.out.println(currentSommet);
+				this.graphe.getDessin().setColor(Color.pink);
+				this.graphe.getDessin().setWidth(5);
+				this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), labels.get(currentSommet).getPadre().getLongitude(), labels.get(currentSommet).getPadre().getLatitude());
 				currentSommet = labels.get(currentSommet).getPadre();
 			}
 		}
