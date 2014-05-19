@@ -16,22 +16,18 @@ public class Pcc extends Algo {
 	public Pcc(Graphe gr)
 	{
 		super(gr);
-		
-		do {
-			System.out.println("Clique pour sommet origine...");
-			this.origine = gr.situerClick(false);
-			System.out.println(this.origine);
-		} while(this.origine.getNombreRouteSortante() == 0);
-		
-		do {
-			System.out.println("Clique pour sommet destination");
-			this.destination = gr.situerClick(false);
-			System.out.println(this.origine);
-		} while(this.destination.getNombreRouteSortante() == 0);
-		
+		this.askSommetsClick();
 		this.labels = new HashMap<Sommet, Label>();
 		this.tas = new BinaryHeap<Label>();
 		
+	}
+	
+	public Pcc(Graphe gr, PrintStream fichierSortie)
+	{
+		super(gr, fichierSortie);
+		this.askSommetsClick();
+		this.labels = new HashMap<Sommet, Label>();
+		this.tas = new BinaryHeap<Label>();
 	}
 	
 	public Pcc(Graphe gr, Readarg readarg) {
@@ -52,6 +48,21 @@ public class Pcc extends Algo {
 
 	public Pcc(Graphe gr, PrintStream fichierSortie, Readarg readarg) {
 		this(gr, readarg);
+	}
+	
+	private void askSommetsClick()
+	{
+		do {
+			System.out.println("Clique pour sommet origine...");
+			this.origine = this.graphe.situerClick(false);
+			System.out.println(this.origine);
+		} while(this.origine.getNombreRouteSortante() == 0);
+		
+		do {
+			System.out.println("Clique pour sommet destination");
+			this.destination = this.graphe.situerClick(false);
+			System.out.println(this.origine);
+		} while(this.destination.getNombreRouteSortante() == 0);
 	}
 	
 	public void run() {
@@ -106,7 +117,8 @@ public class Pcc extends Algo {
 				}
 			}
 			this.graphe.getDessin().setColor(Color.blue);
-			this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), currentLabel.getPadre().getLongitude(), currentLabel.getPadre().getLatitude());
+			this.graphe.getDessin().setWidth(1);
+			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 2);
 		}
 		
 		cout = labels.get(destination).getCout();
@@ -118,11 +130,20 @@ public class Pcc extends Algo {
 			currentSommet = destination;
 			while(currentSommet != origine){
 				System.out.println(currentSommet);
+				this.log(currentSommet.toString());
 				this.graphe.getDessin().setColor(Color.pink);
 				this.graphe.getDessin().setWidth(5);
 				this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), labels.get(currentSommet).getPadre().getLongitude(), labels.get(currentSommet).getPadre().getLatitude());
 				currentSommet = labels.get(currentSommet).getPadre();
 			}
+		}
+	}
+	
+	private void log(String str)
+	{
+		if(this.sortie != null)
+		{
+			this.sortie.println(str);
 		}
 	}
 
