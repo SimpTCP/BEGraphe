@@ -145,7 +145,6 @@ public class Pcc extends Algo {
 			currentSommet = destination;
 			while(currentSommet != origine){
 				c.addSommetDebut(currentSommet);
-				System.out.println(currentSommet);
 				this.log(currentSommet.toString());
 				currentSommet = labels.get(currentSommet).getPadre();
 			}
@@ -153,11 +152,8 @@ public class Pcc extends Algo {
 			this.log(c.toString());
 			c.dessinChemin(this.graphe.getDessin());
 			this.log("");
-			System.out.println("Executé en "+(stop-start)+"ms");
 			this.log("Executé en : "+(stop-start)+"ms");
-			System.out.println("Nbr sommet visite : "+this.labels.size());
 			this.log("Nbr sommet visite : "+this.labels.size());
-			System.out.println("Nbr sommet mark : "+nbrSommetMark);
 			this.log("Nbr sommet mark : "+nbrSommetMark);
 		}
 	}
@@ -168,6 +164,7 @@ public class Pcc extends Algo {
 		{
 			this.sortie.println(str);
 		}
+		System.out.println("Log : "+str);
 	}
 
 }
