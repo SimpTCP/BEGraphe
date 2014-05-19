@@ -52,4 +52,9 @@ public class Arc {
 		this.destination = destination;
 	}
 
+	public int getVitesse()
+	{
+		return this.descripteur.vitesseMax();
+	}
+	
 }

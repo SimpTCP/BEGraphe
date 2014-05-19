@@ -36,11 +36,11 @@ public class Pcc extends Algo {
 		do {
 			System.out.println("Un truc qui va qq part pleaaase");
 			this.origine = this.graphe.getSommets().get(readarg.lireInt("Numero du sommet d'origine ? "));
-		}while(this.origine.getNombreRouteSortante() == 0);
+		}while(this.origine.getRoutesSortantes().size() == 0);
 		do {
 			System.out.println("Un truc qui va qq part pleaaase");
 			this.destination = this.graphe.getSommets().get(readarg.lireInt("Numero du sommet de destination ? "));
-		}while(this.destination.getNombreRouteSortante() == 0);
+		}while(this.destination.getRoutesSortantes().size() == 0);
 		
 		this.labels = new HashMap<Sommet, Label>();
 		this.tas = new BinaryHeap<Label>();
@@ -56,13 +56,13 @@ public class Pcc extends Algo {
 			System.out.println("Clique pour sommet origine...");
 			this.origine = this.graphe.situerClick(false);
 			System.out.println(this.origine);
-		} while(this.origine.getNombreRouteSortante() == 0);
+		} while(this.origine.getRoutesSortantes().size() == 0);
 		
 		do {
 			System.out.println("Clique pour sommet destination");
 			this.destination = this.graphe.situerClick(false);
 			System.out.println(this.origine);
-		} while(this.destination.getNombreRouteSortante() == 0);
+		} while(this.destination.getRoutesSortantes().size() == 0);
 	}
 	
 	public void run() {
@@ -89,6 +89,11 @@ public class Pcc extends Algo {
 				filsSommet = arc.getDestination();
 				filsLabel = this.labels.get(filsSommet);
 				cout = currentLabel.getCout() + arc.tempsParcours();
+				
+				if(arc.getVitesse() == 0)
+				{
+					continue;
+				}
 				
 				if(filsLabel == null)
 				{
