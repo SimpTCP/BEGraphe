@@ -35,11 +35,12 @@ public class Chemin {
 	
 	public void dessinChemin(Dessin dessin){
 		int k;
-		dessin.setColor(Color.blue);
+		dessin.setColor(Color.pink);
 		this.source.drawSommet(10, dessin);
 		this.destination.drawSommet(10, dessin);
 		Sommet tempSrc = new Sommet();
 		Sommet tempDst = new Sommet();
+		dessin.setWidth(5);
 		for(k=1; k<sommets.size()-1;k++){
 			tempSrc = this.sommets.get(k);
 			tempDst = this.sommets.get(k+1);
@@ -48,6 +49,12 @@ public class Chemin {
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "Chemin [cout="+this.coutChemin()+", nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
+				+ ", source=" + source + ", destination=" + destination + "]";
+	}
+
 	public int getNbrNoeuds() {
 		return nbrNoeuds;
 	}
@@ -82,6 +89,13 @@ public class Chemin {
 	public void addSommet(Sommet s)
 	{
 		this.sommets.add(s);
+		this.nbrNoeuds = this.sommets.size();
+	}
+	
+	public void addSommetDebut(Sommet s)
+	{
+		this.sommets.add(0, s);
+		this.nbrNoeuds = this.sommets.size();
 	}
 	
 }

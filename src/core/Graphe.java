@@ -324,5 +324,9 @@ public class Graphe {
 	public void setNombreDescripteurs(int nombreDescripteurs) {
 		this.nombreDescripteurs = nombreDescripteurs;
 	}
+	public int getIdCarte()
+	{
+		return this.idcarte;
+	}
 
 }

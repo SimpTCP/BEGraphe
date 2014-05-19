@@ -132,15 +132,19 @@ public class Pcc extends Algo {
 		}
 		else{
 			System.out.println("Ouais c'est cool tiens mon boudin, Cout de "+origine+" à "+destination+" : "+cout);
+			Chemin c = new Chemin();
+			c.setSource(this.origine);
+			c.setDestination(this.destination);
+			c.setIdCarte(this.graphe.getIdCarte());
 			currentSommet = destination;
 			while(currentSommet != origine){
+				c.addSommetDebut(currentSommet);
 				System.out.println(currentSommet);
 				this.log(currentSommet.toString());
-				this.graphe.getDessin().setColor(Color.pink);
-				this.graphe.getDessin().setWidth(5);
-				this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), labels.get(currentSommet).getPadre().getLongitude(), labels.get(currentSommet).getPadre().getLatitude());
 				currentSommet = labels.get(currentSommet).getPadre();
 			}
+			this.log(c.toString());
+			c.dessinChemin(this.graphe.getDessin());
 		}
 	}
 	

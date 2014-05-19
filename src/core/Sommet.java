@@ -44,7 +44,6 @@ public class Sommet {
 	}
 	
 	public void drawSommet(int taille, Dessin dessin){
-		System.out.println("icicicici");
 		dessin.drawPoint(longitude,latitude,taille);
 	}
 
