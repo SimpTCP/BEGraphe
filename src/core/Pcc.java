@@ -68,6 +68,7 @@ public class Pcc extends Algo {
 	public void run() {
 		
 		long cout;
+		long start = System.currentTimeMillis();
 		Sommet currentSommet;
 		Label currentLabel;
 		Sommet filsSommet;
@@ -126,6 +127,8 @@ public class Pcc extends Algo {
 			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 2);
 		}
 		
+		long stop = System.currentTimeMillis();
+		
 		cout = labels.get(destination).getCout();
 		if(cout == -1){
 			System.out.println("C'est fini mon gars, on peut pas y aller la ou tu veux aller, essaye la Mongolfiere ou le MH370 !");
@@ -143,8 +146,12 @@ public class Pcc extends Algo {
 				this.log(currentSommet.toString());
 				currentSommet = labels.get(currentSommet).getPadre();
 			}
+			this.log("");
 			this.log(c.toString());
 			c.dessinChemin(this.graphe.getDessin());
+			this.log("");
+			System.out.println("Executé en "+(stop-start)+"ms");
+			this.log("Executé en : "+(stop-start)+"ms");
 		}
 	}
 	
