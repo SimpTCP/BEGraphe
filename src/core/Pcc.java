@@ -13,6 +13,27 @@ public class Pcc extends Algo {
 	private BinaryHeap<Label> tas;
 	private HashMap<Sommet, Label> labels;
 
+	public Pcc(Graphe gr)
+	{
+		super(gr);
+		
+		do {
+			System.out.println("Clique pour sommet origine...");
+			this.origine = gr.situerClick(false);
+			System.out.println(this.origine);
+		} while(this.origine.getNombreRouteSortante() == 0);
+		
+		do {
+			System.out.println("Clique pour sommet destination");
+			this.destination = gr.situerClick(false);
+			System.out.println(this.origine);
+		} while(this.destination.getNombreRouteSortante() == 0);
+		
+		this.labels = new HashMap<Sommet, Label>();
+		this.tas = new BinaryHeap<Label>();
+		
+	}
+	
 	public Pcc(Graphe gr, Readarg readarg) {
 		super(gr, readarg) ;
 

@@ -198,9 +198,9 @@ public class Graphe {
 	 *  A n'utiliser que pour faire du debug ou des tests ponctuels.
 	 *  Ne pas utiliser automatiquement a chaque invocation des algorithmes.
 	 */
-	public void situerClick() {
+	public Sommet situerClick(boolean display) {
 
-		System.out.println("Allez-y, cliquez donc.") ;
+		Sommet ret = null;
 
 		if (dessin.waitClick()) {
 			float lon = dessin.getClickLon() ;
@@ -223,11 +223,17 @@ public class Graphe {
 				}
 			}
 
-			System.out.println("Noeud le plus proche : " + noeud) ;
-			System.out.println() ;
-			dessin.setColor(java.awt.Color.red) ;
-			dessin.drawPoint(noeud.getLongitude(), noeud.getLatitude(), 5) ;
+			ret = noeud;
+			if(display)
+			{
+				System.out.println("Noeud le plus proche : " + noeud) ;
+				System.out.println() ;
+				dessin.setColor(java.awt.Color.red) ;
+				dessin.drawPoint(noeud.getLongitude(), noeud.getLatitude(), 5);
+			}
 		}
+		
+		return ret;
 	}
 
 	/**

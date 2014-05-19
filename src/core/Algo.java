@@ -20,6 +20,11 @@ public abstract class Algo {
     	this.graphe = gr ;
     }
     
+    protected Algo(Graphe gr)
+    {
+    	this.graphe = gr;
+    }
+    
     public abstract void run() ;
 
 }
