@@ -67,6 +67,8 @@ public class Pcc extends Algo {
 	
 	public void run() {
 		
+		int nbrSommetMark = 0;
+		
 		long cout;
 		long start = System.currentTimeMillis();
 		Sommet currentSommet;
@@ -84,6 +86,7 @@ public class Pcc extends Algo {
 			currentLabel = tas.deleteMin();
 			currentSommet = currentLabel.getMoi();
 			currentLabel.setMark(true);
+			nbrSommetMark++;
 			
 			// Pour le sommet courrant, on prend chacun de ses fils
 			for(Arc arc: currentSommet.getRoutesSortantes()){
@@ -152,6 +155,10 @@ public class Pcc extends Algo {
 			this.log("");
 			System.out.println("Executé en "+(stop-start)+"ms");
 			this.log("Executé en : "+(stop-start)+"ms");
+			System.out.println("Nbr sommet visite : "+this.labels.size());
+			this.log("Nbr sommet visite : "+this.labels.size());
+			System.out.println("Nbr sommet mark : "+nbrSommetMark);
+			this.log("Nbr sommet mark : "+nbrSommetMark);
 		}
 	}
 	
