@@ -7,8 +7,6 @@ public class Label implements Comparable<Label>{
 	private Sommet padre;
 	private Sommet moi;
 	
-	
-	
 	@Override
 	public String toString() {
 		return "Label [mark=" + mark + ", cout=" + cout + ", padre=" + padre

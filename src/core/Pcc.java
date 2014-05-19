@@ -30,64 +30,58 @@ public class Pcc extends Algo {
 	}
 
 	public void run() {
+		
 		long cout;
-		
-		labels.put(origine, new Label(0, false, origine));
-		labels.put(destination, new Label(-1, false, destination));
-		
-		this.labels.get(origine).setPadre(origine);
-		
 		Sommet currentSommet;
 		Label currentLabel;
 		Sommet filsSommet;
 		Label filsLabel;
-		tas.insert(this.labels.get(origine));
 		
+		labels.put(origine, new Label(0, false, origine));
+		labels.put(destination, new Label(-1, false, destination));
+		this.labels.get(origine).setPadre(origine);
+		
+		tas.insert(this.labels.get(origine));
 		while(!this.labels.get(destination).isMark() && !tas.isEmpty())
 		{
-
 			currentLabel = tas.deleteMin();
 			currentSommet = currentLabel.getMoi();
 			currentLabel.setMark(true);
-
 			
-			
-			for(Arc toFils: currentSommet.getRoutesSortantes()){
-				filsSommet = toFils.getDestination();
+			// Pour le sommet courrant, on prend chacun de ses fils
+			for(Arc arc: currentSommet.getRoutesSortantes()){
+				filsSommet = arc.getDestination();
 				filsLabel = this.labels.get(filsSommet);
+				cout = currentLabel.getCout() + arc.tempsParcours();
 				
-				cout = currentLabel.getCout() + toFils.tempsParcours();
-				
-				if(filsLabel != null && filsLabel.isMark())
+				if(filsLabel == null)
 				{
-					
-				}else{
-				
-				if(filsLabel == null){ // le label est déjà créé ? 
 					Label label = new Label(currentSommet, cout, filsSommet);
 					filsLabel = label;
 					this.labels.put(filsSommet, filsLabel);
-					tas.insert(filsLabel);
-				} else{
+					this.tas.insert(filsLabel);
+				}
+				else if (!filsLabel.isMark())
+				{
 					Label tmp = new Label();
 					tmp.setCout(cout);
 					if(filsLabel.compareTo(tmp) == 1)
 					{
 						filsLabel.setCout(cout);
 						filsLabel.setPadre(currentSommet);
-						if(!tas.contains(filsLabel)){
+						
+						if(!tas.contains(filsLabel))
+						{
 							tas.insert(filsLabel);
+						} else {
+							tas.update(filsLabel);
 						}
-						this.labels.put(filsSommet, filsLabel);
-						tas.update(filsLabel);
+						
 					}
 				}
-				}
-				filsLabel = null;
 			}
 			this.graphe.getDessin().setColor(Color.blue);
 			this.graphe.getDessin().drawLine(currentSommet.getLongitude(), currentSommet.getLatitude(), currentLabel.getPadre().getLongitude(), currentLabel.getPadre().getLatitude());
-			
 		}
 		
 		cout = labels.get(destination).getCout();
