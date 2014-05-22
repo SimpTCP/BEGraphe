@@ -6,24 +6,7 @@ public class Label implements Comparable<Label>{
 	private long cout;
 	private Sommet padre;
 	private Sommet moi;
-	private Sommet destination;
-	public Sommet getDestination() {
-		return destination;
-	}
-
-	public void setDestination(Sommet destination) {
-		this.destination = destination;
-	}
-	boolean isStar;
 	
-	public boolean isStar() {
-		return isStar;
-	}
-
-	public void setStar(boolean isStar) {
-		this.isStar = isStar;
-	}
-
 	@Override
 	public String toString() {
 		return "Label [mark=" + mark + ", cout=" + cout + ", padre=" + padre
@@ -34,46 +17,20 @@ public class Label implements Comparable<Label>{
 		this.mark = false;
 		this.cout = -1;
 	}
-	Label(boolean mark, Sommet dest){
-		this.mark = false;
-		this.cout = -1;
-		this.mark = mark;
-		this.destination = dest;
-	}
 	
-	Label(long c, boolean m, Sommet o, Sommet dest)
+	Label(long c, boolean m, Sommet o)
 	{
 		this.cout = c;
 		this.mark = m;
 		this.moi = o;
-		this.destination = dest;
 	}
 	
-	Label(Sommet papaoutai, long cout, Sommet bibi, Sommet dest){
+	Label(Sommet papaoutai, long cout, Sommet bibi){
 		this.mark = false;
 		this.cout = cout;
 		this.padre = papaoutai;
 		this.moi = bibi;
-		this.destination = dest;
 	}
-	Label(long c, boolean m, Sommet o, Sommet dest, boolean is)
-	{
-		this.cout = c;
-		this.mark = m;
-		this.moi = o;
-		this.destination = dest;
-		this.isStar = is;
-	}
-	
-	Label(Sommet papaoutai, long cout, Sommet bibi, Sommet dest, boolean is){
-		this.mark = false;
-		this.cout = cout;
-		this.padre = papaoutai;
-		this.moi = bibi;
-		this.destination = dest;
-		this.setMark(is);
-	}
-	
 	
 	public boolean isMark() {
 		return mark;
@@ -84,16 +41,6 @@ public class Label implements Comparable<Label>{
 	public long getCout() {
 		return cout;
 	}
-	public long coutTotal() {
-		long k = 100; // coefficient pour le cout estimé entre 0 et 100
-		long ret = cout;
-		if(isStar()){
-			System.out.println("Cout : "+ getCout());
-			System.out.println("distance père : "+ this.distancePapa());
-			ret = cout + k*this.distancePapa(); 
-		}
-		return ret;
-	}
 	public void setCout(long cout) {
 		this.cout = cout;
 	}
@@ -103,15 +50,14 @@ public class Label implements Comparable<Label>{
 	public void setPadre(Sommet padre) {
 		this.padre = padre;
 	}
-	public long distancePapa(){
-		return (long) Graphe.distance(this.getMoi().getLongitude(), this.getMoi().getLatitude(), this.getDestination().getLongitude(), this.getDestination().getLatitude());
-	}
+	
 	public int compareTo(Label autre) {
 		int ret;
-		if(autre.coutTotal() == this.coutTotal())
+		
+		if(autre.getCout() == this.getCout())
 		{
 			ret = 0;
-		} else if (this.coutTotal() != -1 && this.coutTotal() < autre.coutTotal())
+		} else if (this.getCout() != -1 && this.getCout() < autre.getCout())
 		{
 			ret = -1;
 		} else {

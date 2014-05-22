@@ -10,8 +10,8 @@ public class Pcc extends Algo {
 
 	protected Sommet origine;
 	protected Sommet destination;
-	protected BinaryHeap<Label> tas;
-	protected HashMap<Sommet, Label> labels;
+	private BinaryHeap<Label> tas;
+	private HashMap<Sommet, Label> labels;
 
 	public Pcc(Graphe gr)
 	{
@@ -50,7 +50,7 @@ public class Pcc extends Algo {
 		this(gr, readarg);
 	}
 	
-	protected void askSommetsClick()
+	private void askSommetsClick()
 	{
 		do {
 			System.out.println("Clique pour sommet origine...");
@@ -76,8 +76,8 @@ public class Pcc extends Algo {
 		Sommet filsSommet;
 		Label filsLabel;
 		
-		labels.put(origine, new Label(0, false, origine, destination));
-		labels.put(destination, new Label(-1, false, destination, destination));
+		labels.put(origine, new Label(0, false, origine));
+		labels.put(destination, new Label(-1, false, destination));
 		this.labels.get(origine).setPadre(origine);
 		
 		tas.insert(this.labels.get(origine));
@@ -101,7 +101,7 @@ public class Pcc extends Algo {
 				
 				if(filsLabel == null)
 				{
-					Label label = new Label(currentSommet, cout, filsSommet, destination);
+					Label label = new Label(currentSommet, cout, filsSommet);
 					filsLabel = label;
 					this.labels.put(filsSommet, filsLabel);
 					this.tas.insert(filsLabel);
@@ -158,7 +158,7 @@ public class Pcc extends Algo {
 		}
 	}
 	
-	protected void log(String str)
+	private void log(String str)
 	{
 		if(this.sortie != null)
 		{
