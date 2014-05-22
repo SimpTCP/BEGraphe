@@ -1,6 +1,7 @@
 package core ;
 
 import java.io.* ;
+
 import base.Readarg ;
 
 public class PccStar extends Pcc {
@@ -13,7 +14,11 @@ public class PccStar extends Pcc {
 		super(graphe);
 	}
 
-    @Override
+    public PccStar(Graphe graphe, PrintStream fichierSortie) {
+		super(graphe, fichierSortie);
+	}
+
+	@Override
     protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
 	{
     	double coutEstimee = Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
