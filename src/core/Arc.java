@@ -9,15 +9,20 @@ public class Arc {
 	private Sommet destination;
 	private char zoneDeDestination;
 
+// Log : Chemin [cout=15045, nbrNoeuds=551, idCarte=1024, source=Sommet 39983 [RoutesSortantes=[Arc [longueur=71, tempsParcours()=8.52, getVitesse()=30], Arc [longueur=32, tempsParcours()=3.84, getVitesse()=30], Arc [longueur=1728, tempsParcours()=207.35999999999999, getVitesse()=30]], latitude=43.267796, longitude=0.076559, nombreRouteSortante=3], destination=Sommet 106171 [RoutesSortantes=[Arc [longueur=61, tempsParcours()=7.319999999999999, getVitesse()=30]], latitude=44.877304, longitude=2.72019, nombreRouteSortante=1]]
 
-	public String toString(){
-		return "longueur : "+longueur+" vitessemax : "+descripteur.vitesseMax()+"";
+	@Override
+	public String toString() {
+		return "Arc [longueur=" + longueur + ", tempsParcours()="
+				+ this.tempsParcours() + ", getVitesse()=" + getVitesse() + "]";
 	}
-	public long tempsParcours(){
-		float pitou;
-		pitou = ((float)longueur)/((float)(this.descripteur.vitesseMax())*1000);
-		pitou*= 3600000;
-		return ((long)pitou);
+
+	
+	// renvoie le temps de parcours en secondes
+	public double tempsParcours(){
+		double retour;
+		retour = (this.longueur)/(this.getVitesse()/3.6);
+		return retour;
 	}
 	
 	public Descripteur getDescripteur() {

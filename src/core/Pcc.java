@@ -11,7 +11,7 @@ public class Pcc extends Algo {
 	protected Sommet origine;
 	protected Sommet destination;
 	private BinaryHeap<Label> tas;
-	private HashMap<Sommet, Label> labels;
+	protected HashMap<Sommet, Label> labels;
 
 	public Pcc(Graphe gr)
 	{
@@ -65,20 +65,26 @@ public class Pcc extends Algo {
 		} while(this.destination.getRoutesSortantes().size() == 0);
 	}
 	
+	protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
+	{
+		Label label = new Label(father, cout, who, mark, 0);
+		this.labels.put(who, label);
+		return label;
+	}
+	
 	public void run() {
 		
 		int nbrSommetMark = 0;
 		
-		long cout;
+		double cout;
 		long start = System.currentTimeMillis();
 		Sommet currentSommet;
 		Label currentLabel;
 		Sommet filsSommet;
 		Label filsLabel;
 		
-		labels.put(origine, new Label(0, false, origine));
-		labels.put(destination, new Label(-1, false, destination));
-		this.labels.get(origine).setPadre(origine);
+		this.createLabelAndPut(this.origine, 0, this.origine, false);
+		this.createLabelAndPut(this.destination, -1, null, false);
 		
 		tas.insert(this.labels.get(origine));
 		while(!this.labels.get(destination).isMark() && !tas.isEmpty())
@@ -101,9 +107,7 @@ public class Pcc extends Algo {
 				
 				if(filsLabel == null)
 				{
-					Label label = new Label(currentSommet, cout, filsSommet);
-					filsLabel = label;
-					this.labels.put(filsSommet, filsLabel);
+					filsLabel = this.createLabelAndPut(filsSommet, cout, currentSommet, false);
 					this.tas.insert(filsLabel);
 				}
 				else if (!filsLabel.isMark())

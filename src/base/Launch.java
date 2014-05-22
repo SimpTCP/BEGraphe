@@ -36,6 +36,7 @@ public class Launch {
 		System.out.println ("5 - Charger un fichier de chemin (.path) et le verifier.") ;
 		System.out.println("6 - Plus court chemin standard (avec click!)");
 		System.out.println("7 - Plus court chemin standard (avec click et logfile)");
+		System.out.println("8 - Plus court chemin A-star (avec click!)");
 
 		System.out.println () ;
 	}
@@ -100,6 +101,10 @@ public class Launch {
 					
 				case 7:
 					algo = new Pcc(graphe, this.fichierSortie());
+					break;
+				
+				case 8:
+					algo = new PccStar(graphe);
 					break;
 					
 				default:
