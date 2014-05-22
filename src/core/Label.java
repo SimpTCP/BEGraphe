@@ -27,7 +27,7 @@ public class Label implements Comparable<Label>{
 	@Override
 	public String toString() {
 		return "Label [mark=" + mark + ", cout=" + cout + ", padre=" + padre
-				+ ", moi=" + moi + "]";
+				+ ", moi=" + moi + "isStar : "+isStar+"]";
 	}
 
 	Label(){
@@ -71,7 +71,7 @@ public class Label implements Comparable<Label>{
 		this.padre = papaoutai;
 		this.moi = bibi;
 		this.destination = dest;
-		this.setMark(is);
+		this.isStar = is;
 	}
 	
 	
@@ -85,12 +85,10 @@ public class Label implements Comparable<Label>{
 		return cout;
 	}
 	public long coutTotal() {
-		long k = 100; // coefficient pour le cout estimé entre 0 et 100
+		long k = 1; // coefficient pour le cout estimé entre 0 et 100
 		long ret = cout;
 		if(isStar()){
-			System.out.println("Cout : "+ getCout());
-			System.out.println("distance père : "+ this.distancePapa());
-			ret = cout + k*this.distancePapa(); 
+			ret = cout + (long)(((float)this.distancePapa()/(float)(130*1000))*3600000); 
 		}
 		return ret;
 	}
@@ -104,7 +102,7 @@ public class Label implements Comparable<Label>{
 		this.padre = padre;
 	}
 	public long distancePapa(){
-		return (long) Graphe.distance(this.getMoi().getLongitude(), this.getMoi().getLatitude(), this.getDestination().getLongitude(), this.getDestination().getLatitude());
+		return (long) Graphe.distance((double)this.getMoi().getLongitude(), (double)this.getMoi().getLatitude(), (double)this.getDestination().getLongitude(), (double)this.getDestination().getLatitude());
 	}
 	public int compareTo(Label autre) {
 		int ret;
