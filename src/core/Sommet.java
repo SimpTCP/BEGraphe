@@ -33,11 +33,10 @@ public class Sommet {
 	}
 	
 	public Arc arcToSommet(Sommet s){
-		Arc arc = null;
+		Arc arc = this.RoutesSortantes.get(0);
 		for(Arc a : this.RoutesSortantes){
-			if(a.getDestination()==s){
+			if(a.getDestination() == s && arc.tempsParcours() > a.tempsParcours()){
 				arc = a;
-				break;
 			}
 		}
 		return arc;

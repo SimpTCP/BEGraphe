@@ -1,6 +1,7 @@
 package core ;
 
 import java.io.* ;
+
 import base.* ;
 
 /**
@@ -31,6 +32,12 @@ public abstract class Algo {
     	this.sortie = fichierSortie;
     }
     
-    public abstract void run() ;
+    protected Algo(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination)
+    {
+    	this.graphe = graphe;
+    	this.sortie = sortie;
+    }
+    
+    public abstract void run();
 
 }

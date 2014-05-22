@@ -18,11 +18,16 @@ public class PccStar extends Pcc {
 		super(graphe, fichierSortie);
 	}
 
+    public PccStar(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination)
+    {
+    	super(graphe, sortie, source, destination);
+    }
+    
 	@Override
     protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
 	{
     	double coutEstimee = Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
-    	coutEstimee /= (140/3.6); // t = d/v (d en m, v en m/s)
+    	coutEstimee /= (200/3.6); // t = d/v (d en m, v en m/s)
     	/*
     	 * Le coutEstimee est une borne inférieure du coût réel :
     	 * - la distance est plus petite

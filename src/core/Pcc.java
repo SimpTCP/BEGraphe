@@ -50,6 +50,14 @@ public class Pcc extends Algo {
 		this(gr, readarg);
 	}
 	
+	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination) {
+		super(graphe, sortie);
+		this.destination = destination;
+		this.origine = source;
+		this.labels = new HashMap<Sommet, Label>();
+		this.tas = new BinaryHeap<Label>();
+	}
+
 	private void askSommetsClick()
 	{
 		do {
@@ -162,13 +170,21 @@ public class Pcc extends Algo {
 		}
 	}
 	
-	private void log(String str)
+	public void log(String str)
 	{
 		if(this.sortie != null)
 		{
 			this.sortie.println(str);
 		}
 		System.out.println("Log : "+str);
+	}
+
+	public Sommet getOrigine() {
+		return origine;
+	}
+
+	public Sommet getDestination() {
+		return destination;
 	}
 
 }

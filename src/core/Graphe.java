@@ -259,7 +259,7 @@ public class Graphe {
 				System.exit(1);
 			}
 
-			chemin.setNbrNoeuds(dis.readInt());
+			int nbrNoeud = dis.readInt();
 
 			// Origine du chemin
 			dis.readUnsignedByte();
@@ -271,13 +271,13 @@ public class Graphe {
 			int last_node = Utils.read24bits(dis);
 			chemin.setDestination(this.sommets.get(last_node));
 
-			System.out.println("Chemin de ("+chemin.getNbrNoeuds()+" sommets):" + chemin.getSource() + " vers " + chemin.getDestination());
+			System.out.println("Chemin de ("+nbrNoeud+" sommets):" + chemin.getSource() + " vers " + chemin.getDestination());
 
 			int current_zone = 0;
 			int current_node = 0;
 			Sommet s = new Sommet();
 			// Tous les noeuds du chemin
-			for (int i = 0 ; i < chemin.getNbrNoeuds() ; i++) {
+			for (int i = 0 ; i < nbrNoeud ; i++) {
 				current_zone = dis.readUnsignedByte();
 				current_node = Utils.read24bits(dis);
 				s = this.sommets.get(current_node);
@@ -285,13 +285,14 @@ public class Graphe {
 				System.out.println(" --> " + s);
 			}
 
-			if ((current_zone != last_zone) || (current_node != last_node)) {
+			//if ((current_zone != last_zone) || (current_node != last_node)) {
+			if (current_node != last_node) {
 				System.out.println("Le chemin " + nom_chemin + " ne termine pas sur le bon noeud.") ;
 				System.exit(1) ;
 			}
 			
 			this.chemins.add(chemin);
-			System.out.println(chemin.coutChemin());
+			System.out.println(chemin.coutChemin()/60.0);
 			chemin.dessinChemin(dessin);
 
 		} catch (IOException e) {

@@ -38,6 +38,7 @@ public class Launch {
 		System.out.println("7 - Plus court chemin standard (avec click et logfile)");
 		System.out.println("8 - Plus court chemin A-star (avec click!)");
 		System.out.println("9 - Plus court chemin A-star (avec click et logfile)");
+		System.out.println("10 - Pcc et PccStar sur les mêmes sommets");
 
 		System.out.println () ;
 	}
@@ -110,6 +111,16 @@ public class Launch {
 				
 				case 9:
 					algo = new PccStar(graphe, this.fichierSortie());
+					break;
+				
+				case 10:
+					PrintStream sortie = this.fichierSortie();
+					Pcc pcc = new Pcc(graphe, sortie);
+					sortie.println("Lancement de pcc ...");
+					pcc.run();
+					Algo star = new PccStar(graphe, sortie, pcc.getOrigine(), pcc.getDestination());
+					sortie.println("Lancement de A-Star ...");
+					star.run();
 					break;
 					
 				default:
