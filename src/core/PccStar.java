@@ -1,8 +1,8 @@
 package core ;
 
-import java.io.* ;
+import java.io.PrintStream;
 
-import base.Readarg ;
+import base.Readarg;
 
 public class PccStar extends Pcc {
 
@@ -24,10 +24,10 @@ public class PccStar extends Pcc {
     }
     
 	@Override
-    protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
+    protected Label createLabelAndPut(Sommet who, float cout, Sommet father, boolean mark)
 	{
-    	double coutEstimee = Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
-    	coutEstimee /= (200/3.6); // t = d/v (d en m, v en m/s)
+    	float coutEstimee = (float) Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
+    	coutEstimee /= (130*1000); // t = d/v (d en m, v en m/s)
     	/*
     	 * Le coutEstimee est une borne inférieure du coût réel :
     	 * - la distance est plus petite

@@ -17,9 +17,9 @@ public class Chemin {
 		this.sommets = new ArrayList<Sommet>();
 	}
 	
-	public long coutChemin(){
+	public float coutChemin(){
 		int k;
-		long cout;
+		float cout;
 		Sommet tempSrc = new Sommet();
 		Sommet tempDst = new Sommet();
 		Arc tempArc = new Arc();
@@ -38,10 +38,14 @@ public class Chemin {
 		dessin.setColor(Color.pink);
 		this.source.drawSommet(10, dessin);
 		this.destination.drawSommet(10, dessin);
+
+		dessin.setWidth(5);
+		dessin.drawLine(this.source.getLongitude(), this.source.getLatitude(), this.sommets.get(0).getLongitude(), this.sommets.get(0).getLatitude());
+		
 		Sommet tempSrc = new Sommet();
 		Sommet tempDst = new Sommet();
-		dessin.setWidth(5);
-		for(k=1; k<sommets.size()-1;k++){
+		
+		for(k=0; k<sommets.size()-1;k++){
 			tempSrc = this.sommets.get(k);
 			tempDst = this.sommets.get(k+1);
 			dessin.drawLine(tempSrc.getLongitude(), tempSrc.getLatitude(), tempDst.getLongitude(), tempDst.getLatitude());
@@ -51,7 +55,7 @@ public class Chemin {
 	
 	@Override
 	public String toString() {
-		return "Chemin [cout="+this.coutChemin()+", nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
+		return "Chemin [cout="+this.coutChemin()/60.0+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
 				+ ", source=" + source + ", destination=" + destination + "]";
 	}
 

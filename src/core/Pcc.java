@@ -73,7 +73,7 @@ public class Pcc extends Algo {
 		} while(this.destination.getRoutesSortantes().size() == 0);
 	}
 	
-	protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
+	protected Label createLabelAndPut(Sommet who, float cout, Sommet father, boolean mark)
 	{
 		Label label = new Label(mark, cout, father, who, 0);
 		this.labels.put(who, label);
@@ -84,7 +84,7 @@ public class Pcc extends Algo {
 		
 		int nbrSommetMark = 0;
 		
-		double cout;
+		float cout;
 		long start = System.currentTimeMillis();
 		Sommet currentSommet;
 		Label currentLabel;
@@ -92,7 +92,7 @@ public class Pcc extends Algo {
 		Label filsLabel;
 		
 		this.createLabelAndPut(this.origine, 0, this.origine, false);
-		this.createLabelAndPut(this.destination, -1, null, false);
+		this.createLabelAndPut(this.destination, Integer.MAX_VALUE, null, false);
 		
 		tas.insert(this.labels.get(origine));
 		while(!this.labels.get(destination).isMark() && !tas.isEmpty())
@@ -155,11 +155,12 @@ public class Pcc extends Algo {
 			c.setDestination(this.destination);
 			c.setIdCarte(this.graphe.getIdCarte());
 			currentSommet = destination;
-			while(currentSommet != origine){
+			do {
+				System.out.println(" -> "+currentSommet.getEntierSommet());
 				c.addSommetDebut(currentSommet);
-				this.log(currentSommet.toString());
-				currentSommet = labels.get(currentSommet).getPadre();
-			}
+				//this.log(currentSommet.toString());
+				currentSommet = this.labels.get(currentSommet).getPadre();
+			} while(currentSommet != origine);
 			this.log("");
 			this.log(c.toString());
 			c.dessinChemin(this.graphe.getDessin());

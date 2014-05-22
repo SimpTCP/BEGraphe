@@ -5,7 +5,7 @@ import base.Descripteur;
 public class Arc {
 	
 	private Descripteur descripteur;
-	private int longueur;
+	private float longueur;
 	private Sommet destination;
 	private char zoneDeDestination;
 
@@ -14,14 +14,14 @@ public class Arc {
 	@Override
 	public String toString() {
 		return "Arc [longueur=" + longueur + ", tempsParcours()="
-				+ this.tempsParcours() + ", getVitesse()=" + getVitesse() + "]";
+				+ this.tempsParcours() + "heures, getVitesse()=" + getVitesse() + "]";
 	}
 
 	
 	// renvoie le temps de parcours en secondes
-	public double tempsParcours(){
-		double retour;
-		retour = (this.longueur)/(this.getVitesse()/3.6);
+	public float tempsParcours(){
+		float retour;
+		retour = (this.longueur)/(this.getVitesse()*1000F);
 		return retour;
 	}
 	
@@ -33,11 +33,11 @@ public class Arc {
 		this.descripteur = descripteur;
 	}
 
-	public int getLongueur() {
+	public float getLongueur() {
 		return longueur;
 	}
 
-	public void setLongueur(int longueur) {
+	public void setLongueur(float longueur) {
 		this.longueur = longueur;
 	}
 

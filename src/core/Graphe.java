@@ -174,8 +174,8 @@ public class Graphe {
 
 	}
 
-	// Rayon de la terre en metres
-	private static final double rayon_terre = 6378137.0 ;
+	// Rayon de la terrlonge en metres
+	private static final double rayonTerre = 6378137.0 ;
 
 	/**
 	 *  Calcule de la distance orthodromique - plus court chemin entre deux points �� la surface d'une sph��re
@@ -186,13 +186,23 @@ public class Graphe {
 	 *  @return la distance entre les deux points en metres.
 	 *  Methode ����crite par Thomas Thiebaud, mai 2013
 	 */
-	public static double distance(double long1, double lat1, double long2, double lat2) {
-		double sinLat = Math.sin(Math.toRadians(lat1))*Math.sin(Math.toRadians(lat2));
-		double cosLat = Math.cos(Math.toRadians(lat1))*Math.cos(Math.toRadians(lat2));
-		double cosLong = Math.cos(Math.toRadians(long2-long1));
-		return rayon_terre*Math.acos(sinLat+cosLat*cosLong);
-	}
+//	public static double distance(double long1, double lat1, double long2, double lat2) {
+//		double sinLat = Math.sin(Math.toRadians(lat1))*Math.sin(Math.toRadians(lat2));
+//		double cosLat = Math.cos(Math.toRadians(lat1))*Math.cos(Math.toRadians(lat2));
+//		double cosLong = Math.cos(Math.toRadians(long2-long1));
+//		return rayon_terre*Math.acos(sinLat+cosLat*cosLong);
+//	}
 
+	public static double distance(double long1, double lat1, double long2,
+			double lat2) {
+		double sinLat = Math.sin(Math.toRadians(lat1))
+				* Math.sin(Math.toRadians(lat2));
+		double cosLat = Math.cos(Math.toRadians(lat1))
+				* Math.cos(Math.toRadians(lat2));
+		double cosLong = Math.cos(Math.toRadians(long2 - long1));
+		return rayonTerre * Math.acos(sinLat + cosLat * cosLong);
+	}
+	
 	/**
 	 *  Attend un clic sur la carte et affiche le numero de sommet le plus proche du clic.
 	 *  A n'utiliser que pour faire du debug ou des tests ponctuels.
@@ -292,7 +302,7 @@ public class Graphe {
 			}
 			
 			this.chemins.add(chemin);
-			System.out.println(chemin.coutChemin()/60.0);
+			System.out.println(chemin.coutChemin()/60F);
 			chemin.dessinChemin(dessin);
 
 		} catch (IOException e) {
