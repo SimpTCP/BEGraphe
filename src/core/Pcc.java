@@ -67,7 +67,7 @@ public class Pcc extends Algo {
 	
 	protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
 	{
-		Label label = new Label(father, cout, who, mark, 0);
+		Label label = new Label(mark, cout, father, who, 0);
 		this.labels.put(who, label);
 		return label;
 	}

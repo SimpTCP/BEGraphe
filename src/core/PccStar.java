@@ -17,8 +17,13 @@ public class PccStar extends Pcc {
     protected Label createLabelAndPut(Sommet who, double cout, Sommet father, boolean mark)
 	{
     	double coutEstimee = Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
-    	coutEstimee /= (130/3.6); // t = d/v (d en m, v en m/s)
-		Label label = new Label(father, cout, who, mark, coutEstimee);
+    	coutEstimee /= (140/3.6); // t = d/v (d en m, v en m/s)
+    	/*
+    	 * Le coutEstimee est une borne inférieure du coût réel :
+    	 * - la distance est plus petite
+    	 * - la vitesse est plus grande que celle autorisée
+    	 */
+		Label label = new Label(mark, cout, father, who, coutEstimee);
 		this.labels.put(who, label);
 		return label;
 	}

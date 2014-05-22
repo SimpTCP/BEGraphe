@@ -6,20 +6,14 @@ public class Label implements Comparable<Label>{
 	private double cout;
 	private Sommet padre;
 	private Sommet moi;
-	private double coutEstimee;
-	
-	@Override
-	public String toString() {
-		return "Label [mark=" + mark + ", cout=" + cout + ", padre=" + padre
-				+ ", moi=" + moi + "]";
-	}
+	private double coutEstimee;	
 
 	Label(){
 		this.mark = false;
 		this.cout = -1;
 		this.coutEstimee = 0;
 	}
-	
+
 	Label(double c, boolean m, Sommet o)
 	{
 		this.cout = c;
@@ -36,7 +30,10 @@ public class Label implements Comparable<Label>{
 		this.coutEstimee = 0;
 	}
 
-	public Label(Sommet padre, double cout, Sommet moi, boolean mark, double coutEstimee) {
+	
+	
+	public Label(boolean mark, double cout, Sommet padre, Sommet moi,
+			double coutEstimee) {
 		super();
 		this.mark = mark;
 		this.cout = cout;
@@ -45,6 +42,12 @@ public class Label implements Comparable<Label>{
 		this.coutEstimee = coutEstimee;
 	}
 
+	@Override
+	public String toString() {
+		return "Label [mark=" + mark + ", cout=" + cout + ", padre=" + padre
+				+ ", moi=" + moi + ", coutEstimee=" + coutEstimee + "]";
+	}
+	
 	public double getCoutEstimee() {
 		return coutEstimee;
 	}
@@ -59,12 +62,15 @@ public class Label implements Comparable<Label>{
 	public void setMark(boolean mark) {
 		this.mark = mark;
 	}
+	
 	public double getCout() {
 		return cout;
 	}
-	public void setCout(double cout) {
-		this.cout = cout;
+
+	public void setCout(double cout2) {
+		this.cout = cout2;
 	}
+	
 	public Sommet getPadre() {
 		return padre;
 	}
