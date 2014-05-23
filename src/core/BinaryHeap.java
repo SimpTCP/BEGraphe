@@ -179,6 +179,7 @@ public class BinaryHeap<E extends Comparable<E>> {
 
 		for (E el : this.array) {
 			System.out.println(el.toString()) ;
+			System.out.println();
 		}
 
 		System.out.println() ;

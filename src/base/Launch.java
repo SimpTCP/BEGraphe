@@ -83,7 +83,7 @@ public class Launch {
 
 				case 1 : algo = new Connexite(graphe, this.fichierSortie (), this.readarg) ; break ;
 
-				case 2 : algo = new Pcc(graphe, this.readarg) ; break ;
+				case 2 : algo = new Pcc(graphe, this.fichierSortie(), this.readarg) ; break ;
 
 				case 3 : algo = new PccStar(graphe, this.fichierSortie (), this.readarg) ; break ;
 
@@ -115,12 +115,12 @@ public class Launch {
 				
 				case 10:
 					PrintStream sortie = this.fichierSortie();
-					Pcc pcc = new Pcc(graphe, sortie);
-					sortie.println("Lancement de pcc ...");
-					pcc.run();
-					Algo star = new PccStar(graphe, sortie, pcc.getOrigine(), pcc.getDestination());
+					Pcc star = new PccStar(graphe, sortie);
 					sortie.println("Lancement de A-Star ...");
 					star.run();
+					Pcc pcc = new Pcc(graphe, sortie, star.getOrigine(), star.getDestination());
+					sortie.println("Lancement de pcc ...");
+					pcc.run();
 					break;
 					
 				default:

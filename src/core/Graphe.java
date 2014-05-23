@@ -43,6 +43,7 @@ public class Graphe {
 	private ArrayList<Chemin> chemins;
 	private int nombreSommets;
 	private int nombreDescripteurs;
+	private int vitesseMax = 0;
 
 	public Dessin getDessin() {
 		return dessin;
@@ -52,6 +53,11 @@ public class Graphe {
 		return numzone ;
 	}
 
+	public int getVitesseMax()
+	{
+		return this.vitesseMax;
+	}
+	
 	public String toString()
 	{
 		String ret = "";
@@ -113,6 +119,10 @@ public class Graphe {
 			for (int num_descr = 0 ; num_descr < nb_descripteurs ; num_descr++) {
 				Descripteur d = new Descripteur(dis);
 				this.descripteurs.add(d);
+				if(d.vitesseMax() > this.vitesseMax)
+				{
+					this.vitesseMax = d.vitesseMax();
+				}
 			}
 
 			Utils.checkByte(254, dis) ;

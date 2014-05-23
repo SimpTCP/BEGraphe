@@ -6,7 +6,7 @@ public class Label implements Comparable<Label>{
 	private float cout;
 	private Sommet padre;
 	private Sommet moi;
-	private double coutEstimee;	
+	private float coutEstimee;	
 
 	Label(){
 		this.mark = false;
@@ -33,7 +33,7 @@ public class Label implements Comparable<Label>{
 	
 	
 	public Label(boolean mark, float cout, Sommet padre, Sommet moi,
-			double coutEstimee) {
+			float coutEstimee) {
 		super();
 		this.mark = mark;
 		this.cout = cout;
@@ -48,11 +48,11 @@ public class Label implements Comparable<Label>{
 				+ ", moi=" + moi + ", coutEstimee=" + coutEstimee + "]";
 	}
 	
-	public double getCoutEstimee() {
+	public float getCoutEstimee() {
 		return coutEstimee;
 	}
 
-	public void setCoutEstimee(double coutEstimee) {
+	public void setCoutEstimee(float coutEstimee) {
 		this.coutEstimee = coutEstimee;
 	}
 
@@ -78,13 +78,21 @@ public class Label implements Comparable<Label>{
 		this.padre = padre;
 	}
 	
-	public double getTotalCout()
+	public float getTotalCout()
 	{
 		return this.cout + this.coutEstimee;
 	}
 	
 	public int compareTo(Label autre) {
-		return new Float(this.getTotalCout()).compareTo(new Float(autre.getTotalCout()));		
+		int ret = Float.compare(this.getTotalCout(), autre.getTotalCout());
+		if(ret == 0)
+		{
+//			System.out.println(this.getTotalCout()+" & "+autre.getTotalCout()+" : "+ret);
+//			System.out.println(this.getCoutEstimee()+" vs "+autre.getCoutEstimee());
+			ret = Float.compare(this.getCoutEstimee(), autre.getCoutEstimee());
+		}
+		
+		return ret;
 	}
 	
 	public Sommet getMoi() {

@@ -3,8 +3,10 @@ package core ;
 import java.awt.Color;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import base.Readarg;
+
 
 public class Pcc extends Algo {
 
@@ -48,6 +50,7 @@ public class Pcc extends Algo {
 
 	public Pcc(Graphe gr, PrintStream fichierSortie, Readarg readarg) {
 		this(gr, readarg);
+		this.sortie = fichierSortie;
 	}
 	
 	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination) {
@@ -122,6 +125,8 @@ public class Pcc extends Algo {
 				{
 					Label tmp = new Label();
 					tmp.setCout(cout);
+					tmp.setCoutEstimee(filsLabel.getCoutEstimee());
+					
 					if(filsLabel.compareTo(tmp) == 1)
 					{
 						filsLabel.setCout(cout);
@@ -137,9 +142,9 @@ public class Pcc extends Algo {
 					}
 				}
 			}
+			//System.out.println(currentSommet);
 			this.graphe.getDessin().setColor(Color.blue);
-			this.graphe.getDessin().setWidth(1);
-			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 2);
+			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 1);
 		}
 		
 		long stop = System.currentTimeMillis();
@@ -156,7 +161,7 @@ public class Pcc extends Algo {
 			c.setIdCarte(this.graphe.getIdCarte());
 			currentSommet = destination;
 			do {
-				System.out.println(" -> "+currentSommet.getEntierSommet());
+				//System.out.println(" -> "+currentSommet.getEntierSommet());
 				c.addSommetDebut(currentSommet);
 				//this.log(currentSommet.toString());
 				currentSommet = this.labels.get(currentSommet).getPadre();
