@@ -287,7 +287,7 @@ public class Graphe {
 			chemin.setSource(this.sommets.get(first_node));
 
 			// Destination du chemin
-			int last_zone  = dis.readUnsignedByte();
+			dis.readUnsignedByte(); // int last_zone  = 
 			int last_node = Utils.read24bits(dis);
 			chemin.setDestination(this.sommets.get(last_node));
 
@@ -302,7 +302,6 @@ public class Graphe {
 				current_node = Utils.read24bits(dis);
 				s = this.sommets.get(current_node);
 				chemin.addSommet(s);
-				System.out.println(" --> " + s);
 			}
 
 			//if ((current_zone != last_zone) || (current_node != last_node)) {

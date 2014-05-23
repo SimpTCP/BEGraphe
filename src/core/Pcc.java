@@ -3,7 +3,6 @@ package core ;
 import java.awt.Color;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Scanner;
 
 import base.Readarg;
 
