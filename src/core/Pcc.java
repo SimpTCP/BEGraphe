@@ -161,6 +161,7 @@ public class Pcc extends Algo {
 				//this.log(currentSommet.toString());
 				currentSommet = this.labels.get(currentSommet).getPadre();
 			} while(currentSommet != origine);
+			c.addSommetDebut(origine);
 			this.log("");
 			this.log(c.toString());
 			c.dessinChemin(this.graphe.getDessin());

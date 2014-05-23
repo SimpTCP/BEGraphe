@@ -30,6 +30,7 @@ public class Chemin {
 			tempArc = tempSrc.arcToSommet(tempDst);
 			cout += tempArc.tempsParcours();
 		}
+		
 		return cout;
 	}
 	
@@ -55,7 +56,7 @@ public class Chemin {
 	
 	@Override
 	public String toString() {
-		return "Chemin [cout="+this.coutChemin()/60.0+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
+		return "Chemin [cout="+this.coutChemin()/60F+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
 				+ ", source=" + source + ", destination=" + destination + "]";
 	}
 

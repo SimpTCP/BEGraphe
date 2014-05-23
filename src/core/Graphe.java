@@ -304,6 +304,7 @@ public class Graphe {
 			this.chemins.add(chemin);
 			System.out.println("Le chemin dure " + chemin.coutChemin()/60F + "mins");
 			chemin.dessinChemin(dessin);
+			System.out.println(chemin);
 
 		} catch (IOException e) {
 			e.printStackTrace() ;
