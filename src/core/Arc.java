@@ -14,14 +14,14 @@ public class Arc {
 	@Override
 	public String toString() {
 		return "Arc [longueur=" + longueur + ", tempsParcours()="
-				+ this.tempsParcours() + "heures, getVitesse()=" + getVitesse() + "]";
+				+ this.tempsParcours() + "secondes, getVitesse()=" + getVitesse() + "]";
 	}
 
 	
 	// renvoie le temps de parcours en secondes
 	public float tempsParcours(){
 		float retour;
-		retour = (this.longueur)/(this.getVitesse()*1000F);
+		retour = (this.longueur)/(this.getVitesse()/3.6f);
 		return retour;
 	}
 	

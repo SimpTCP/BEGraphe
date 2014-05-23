@@ -302,7 +302,7 @@ public class Graphe {
 			}
 			
 			this.chemins.add(chemin);
-			System.out.println(chemin.coutChemin()/60F);
+			System.out.println("Le chemin dure " + chemin.coutChemin()/60F + "mins");
 			chemin.dessinChemin(dessin);
 
 		} catch (IOException e) {
