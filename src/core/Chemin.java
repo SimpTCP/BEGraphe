@@ -57,11 +57,6 @@ public class Chemin {
 	@Override
 	public String toString() {
 		String ret = "";
-		for(Sommet s  : this.sommets)
-		{
-			ret += s.toString() + "\n";
-		}
-		
 		ret += "Chemin [cout="+this.coutChemin()/60F+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
 				+ ", source=" + source + ", destination=" + destination + "]";
 		return ret;

@@ -143,7 +143,7 @@ public class Pcc extends Algo {
 			}
 			//System.out.println(currentSommet);
 			this.graphe.getDessin().setColor(Color.blue);
-			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 1);
+			this.graphe.getDessin().drawPoint(currentSommet.getLongitude(), currentSommet.getLatitude(), 2);
 		}
 		
 		long stop = System.currentTimeMillis();
