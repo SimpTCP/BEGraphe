@@ -22,13 +22,13 @@ public class TestTout {
 	private PrintStream logFile;
 	// format : nomCarte, point, point
 	private String[][] cartes = {
-//			{"carre", "9", "19"},
-//			{"carre-dense", "323144", "183927"},
-//			{"carre-dense", "1", "19938"},
-//			{"fractal", "859597", "611565"},
-//			{"fractal", "611565", "512445"},
-//			{"midip", "135285", "95173"},
-//			{"midip", "135285", "47243"},
+			{"carre", "9", "19"},
+			{"carre-dense", "323144", "183927"},
+			{"carre-dense", "1", "19938"},
+			{"fractal", "859597", "611565"},
+			{"fractal", "611565", "512445"},
+			{"midip", "135285", "95173"},
+			{"midip", "135285", "47243"},
 			{"france", "1436267", "450555"},
 			{"france", "2258313", "2385597"}};
 	
