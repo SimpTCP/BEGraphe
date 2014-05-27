@@ -349,5 +349,9 @@ public class Graphe {
 	{
 		return this.idcarte;
 	}
+	
+	public Sommet getSommet(int id) {
+		return this.sommets.get(id);
+	}
 
 }
