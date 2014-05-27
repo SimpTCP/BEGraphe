@@ -1,7 +1,9 @@
 package core ;
 
-import java.io.* ;
-import base.Readarg ;
+import java.io.PrintStream;
+import java.util.ArrayList;
+
+import base.Readarg;
 
 public class Connexite extends Algo {
 
@@ -9,7 +11,7 @@ public class Connexite extends Algo {
     	super(gr, sortie, readarg) ;
     }
 
-    public Chemin run() {
+    public Chemin run(int vitesse, float cout, ArrayList<Label>s, BinaryHeap<Label> c) {
     	return new Chemin();
     }
 

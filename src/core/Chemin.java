@@ -17,7 +17,7 @@ public class Chemin {
 		this.sommets = new ArrayList<Sommet>();
 	}
 	
-	public float coutChemin(){
+	public float coutChemin(int vitesse){
 		int k;
 		float cout;
 		Sommet tempSrc = new Sommet();
@@ -28,7 +28,7 @@ public class Chemin {
 			tempSrc = sommets.get(k);
 			tempDst = sommets.get(k+1);
 			tempArc = tempSrc.arcToSommet(tempDst);
-			cout += tempArc.tempsParcours();
+			cout += tempArc.tempsParcours(vitesse);
 		}
 		
 		return cout;
@@ -57,7 +57,7 @@ public class Chemin {
 	@Override
 	public String toString() {
 		String ret = "";
-		ret += "Chemin [cout="+this.coutChemin()/60F+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
+		ret += "Chemin [cout="+this.coutChemin(0)/60F+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
 				+ ", source=" + source + ", destination=" + destination + "]";
 		return ret;
 	}

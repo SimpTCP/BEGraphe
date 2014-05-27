@@ -1,6 +1,7 @@
 package core ;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import base.Readarg;
 
@@ -38,6 +39,6 @@ public abstract class Algo {
     	this.sortie = sortie;
     }
     
-    public abstract Chemin run();
+    public abstract Chemin run(int vitesse, float coutMax, ArrayList<Label> s, BinaryHeap<Label> b );
 
 }

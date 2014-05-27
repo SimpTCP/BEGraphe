@@ -13,8 +13,20 @@ package base ;
  * ecrit le resultat dans le fichier '/tmp/sortie', puis quitte le programme.
  */
 
-import core.* ;
-import java.io.* ;
+import java.awt.Color;
+import java.io.DataInputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+
+import core.Algo;
+import core.BinaryHeap;
+import core.Chemin;
+import core.Connexite;
+import core.Graphe;
+import core.Label;
+import core.Pcc;
+import core.PccStar;
+import core.Sommet;
 
 public class Launch {
 
@@ -71,7 +83,7 @@ public class Launch {
 			boolean continuer = true ;
 			int choix ;
 
-			while (continuer) {
+			while (continuer){
 				this.afficherMenu () ;
 				choix = this.readarg.lireInt ("Votre choix ? ") ;
 
@@ -80,69 +92,85 @@ public class Launch {
 
 				// Le choix correspond au numero du menu.
 				switch (choix) {
-				case 0 : continuer = false ; break ;
+					case 0 : continuer = false ; break ;
 
-				case 1 : algo = new Connexite(graphe, this.fichierSortie (), this.readarg) ; break ;
+					case 1 : algo = new Connexite(graphe, this.fichierSortie (), this.readarg) ; break ;
 
-				case 2 : algo = new Pcc(graphe, this.fichierSortie(), this.readarg) ; break ;
+					case 2 : algo = new Pcc(graphe, this.fichierSortie(), this.readarg) ; break ;
 
-				case 3 : algo = new PccStar(graphe, this.fichierSortie (), this.readarg) ; break ;
+					case 3 : algo = new PccStar(graphe, this.fichierSortie (), this.readarg) ; break ;
 
-				case 4 :
+					case 4 :
 						System.out.println("Cliquez donc...");
 						graphe.situerClick(true);
 						break ;
 
-				case 5 :
-					String nom_chemin = this.readarg.lireString ("Nom du fichier .path contenant le chemin ? ") ;
-					graphe.verifierChemin(Openfile.open (nom_chemin), nom_chemin) ;
-					break ;
+					case 5 :
+						String nom_chemin = this.readarg.lireString ("Nom du fichier .path contenant le chemin ? ") ;
+						graphe.verifierChemin(Openfile.open (nom_chemin), nom_chemin) ;
+						break ;
 
-				case 6:
-					algo = new Pcc(graphe);
-					break;
+					case 6:
+						algo = new Pcc(graphe);
+						break;
 					
-				case 7:
-					algo = new Pcc(graphe, this.fichierSortie());
-					break;
+					case 7:
+						algo = new Pcc(graphe, this.fichierSortie());
+						break;
 				
-				case 8:
-					algo = new PccStar(graphe);
-					break;
+					case 8:
+						algo = new PccStar(graphe);
+						break;
 				
-				case 9:
-					algo = new PccStar(graphe, this.fichierSortie());
-					break;
+					case 9:
+						algo = new PccStar(graphe, this.fichierSortie());
+						break;
 				
-				case 10:
-					PrintStream sortie = this.fichierSortie();
-					Pcc star = new PccStar(graphe, sortie);
-					sortie.println("Lancement de A-Star ...");
-					star.run();
-					Pcc pcc = new Pcc(graphe, sortie, star.getOrigine(), star.getDestination());
-					sortie.println("Lancement de pcc ...");
-					pcc.run();
-					break;
+					case 10:
+						PrintStream sortie = this.fichierSortie();
+						Pcc star = new PccStar(graphe, sortie);
+						sortie.println("Lancement de A-Star ...");
+						star.run(0,0, null, null);
+						Pcc pcc = new Pcc(graphe, sortie, star.getOrigine(), star.getDestinations().get(0));
+						sortie.println("Lancement de pcc ...");
+						pcc.run(0,0, null, null);
+						break;
 					
-				case 11:
-					PrintStream fsortie = new PrintStream("/dev/null");
-					System.out.println("Cliquez pour choisir la voiture ...");
-					Sommet voiture = graphe.situerClick(true);
-					System.out.println("Cliquez pour choisir le pieton ...");
-					Sommet pieton = graphe.situerClick(true);
-					Pcc voiturePieton = new PccStar(graphe, fsortie, voiture, pieton);
-					Chemin c = voiturePieton.run();
-					float cout = c.coutChemin();
-					System.out.println("Cout : "+cout);
-					break;
+					case 11:
+						PrintStream fsortie = new PrintStream("/dev/null");
+						System.out.println("Cliquez pour choisir la voiture ...");
+						Sommet voiture = graphe.situerClick(true);
+						System.out.println("Cliquez pour choisir le pieton ...");
+						Sommet pieton = graphe.situerClick(true);
+						System.out.println("Cliquez pour choisir l'endroit ou tu vas que ce soit restaurant, station essence, club echangiste, ou je ne sais quoi d'autre, c'est toi qui vois, tant que ça te fais plaisir c'est ça le plus important ...");
+						Sommet destination = graphe.situerClick(true);
+						Pcc voiturePieton = new PccStar(graphe, fsortie, voiture, pieton);//A* de 1 vers 1
+						Chemin c = voiturePieton.run(0,0, null, null); //on passe coutMax = 0 (pas de condition d'arret en temps + vitesseParcourt = 0 pas de vitesse max a part celle des routes
+						float cout = c.coutChemin(0);
+						System.out.println("Cout : "+cout);
+						//JUSQUE LA OOOK !
+						ArrayList<Label> labelSommetArroundPieton = new ArrayList<Label>();
+						Sommet nulle = null;
+						Pcc cerclePieton= new Pcc(graphe, fsortie, pieton, nulle); //DJISKSTRA de 1 vers tous avec 
+						cerclePieton.run(4,  cout, labelSommetArroundPieton, null);//condition d'arret : stop quand cout >coutMax + parcourt a vitesse 4 + stock les sommets true dans labelSommetArroundPieton
+						BinaryHeap<Label> tasArroundPieton = new BinaryHeap<Label>();
+						for(Label lab: labelSommetArroundPieton){
+							lab.setMark(false);
+							tasArroundPieton.insert(lab);
+						}
+						//Pcc voiturePieton2 = new Pcc(graphe,fsortie, voiture,  );
+						tasArroundPieton.size();
+						Pcc onYVa = new PccStar(graphe, fsortie, null, destination);
+						onYVa.setTas(tasArroundPieton);
+						//onYVa.run(0, 0, null, tasArroundPieton);
+						break;
 					
-				default:
-					System.out.println ("Choix de menu incorrect : " + choix) ;
-					System.exit(1) ;
+					default:
+						System.out.println ("Choix de menu incorrect : " + choix) ;
+						System.exit(1) ;
+					}
+					if (algo != null) { algo.run(0,0, null, null) ; }
 				}
-
-				if (algo != null) { algo.run() ; }
-			}
 
 			System.out.println ("Programme terminé.") ;
 			System.exit(0) ;

@@ -311,7 +311,7 @@ public class Graphe {
 			}
 			
 			this.chemins.add(chemin);
-			System.out.println("Le chemin dure " + chemin.coutChemin()/60F + "mins");
+			System.out.println("Le chemin dure " + chemin.coutChemin(0)/60F + "mins");
 			chemin.dessinChemin(dessin);
 			System.out.println(chemin);
 

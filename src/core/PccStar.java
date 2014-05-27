@@ -26,17 +26,20 @@ public class PccStar extends Pcc {
 	@Override
     protected Label createLabelAndPut(Sommet who, float cout, Sommet father, boolean mark)
 	{
-    	float distance = (float) Graphe.distance(who.getLongitude(), who.getLatitude(), this.destination.getLongitude(), this.destination.getLatitude());
-    	float coutEstimee = (distance) / (this.graphe.getVitesseMax()/3.6f); // t = d/v (d en m, v en m/s)
+		if(this.destinations.size() ==1){
+			float distance = (float) Graphe.distance(who.getLongitude(), who.getLatitude(), this.destinations.get(0).getLongitude(), this.destinations.get(0).getLatitude());
+			float coutEstimee = (distance) / (this.graphe.getVitesseMax()/3.6f); // t = d/v (d en m, v en m/s)
     	//coutEstimee = 0;
     	/*
     	 * Le coutEstimee est une borne inférieure du coût réel :
     	 * - la distance est plus petite
     	 * - la vitesse est plus grande que celle autorisée
     	 */
-		Label label = new Label(mark, cout, father, who, coutEstimee);
-		this.labels.put(who, label);
-		return label;
+			Label label = new Label(mark, cout, father, who, coutEstimee);
+			this.labels.put(who, label);
+			return label;
+		}
+		return null;
 	}
 
 }
