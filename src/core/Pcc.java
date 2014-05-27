@@ -149,7 +149,7 @@ public class Pcc extends Algo {
 		long stop = System.currentTimeMillis();
 		
 		cout = labels.get(destination).getCout();
-		if(cout == -1){
+		if(cout == Integer.MAX_VALUE){
 			System.out.println("C'est fini mon gars, on peut pas y aller la ou tu veux aller, essaye la Mongolfiere ou le MH370 !");
 		}
 		else{
