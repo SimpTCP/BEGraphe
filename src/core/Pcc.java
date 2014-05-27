@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import base.Readarg;
 
-
 public class Pcc extends Algo {
 
 	protected Sommet origine;
@@ -82,7 +81,7 @@ public class Pcc extends Algo {
 		return label;
 	}
 	
-	public void run() {
+	public Chemin run() {
 		
 		int nbrSommetMark = 0;
 		
@@ -149,12 +148,12 @@ public class Pcc extends Algo {
 		long stop = System.currentTimeMillis();
 		
 		cout = labels.get(destination).getCout();
+		Chemin c = new Chemin();
 		if(cout == Integer.MAX_VALUE){
 			System.out.println("C'est fini mon gars, on peut pas y aller la ou tu veux aller, essaye la Mongolfiere ou le MH370 !");
 		}
 		else{
 			System.out.println("Ouais c'est cool tiens mon boudin, Cout de "+origine+" à "+destination+" : "+cout);
-			Chemin c = new Chemin();
 			c.setSource(this.origine);
 			c.setDestination(this.destination);
 			c.setIdCarte(this.graphe.getIdCarte());
@@ -174,6 +173,7 @@ public class Pcc extends Algo {
 			this.log("Nbr sommet visite : "+this.labels.size());
 			this.log("Nbr sommet mark : "+nbrSommetMark);
 		}
+		return c;
 	}
 	
 	public void log(String str)

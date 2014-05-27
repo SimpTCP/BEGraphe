@@ -1,8 +1,8 @@
 package core ;
 
-import java.io.* ;
+import java.io.PrintStream;
 
-import base.* ;
+import base.Readarg;
 
 /**
  * Classe abstraite representant un algorithme (connexite, plus court chemin, etc.)
@@ -38,6 +38,6 @@ public abstract class Algo {
     	this.sortie = sortie;
     }
     
-    public abstract void run();
+    public abstract Chemin run();
 
 }
