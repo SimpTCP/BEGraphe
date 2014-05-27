@@ -248,7 +248,7 @@ public class Graphe {
 			{
 				System.out.println("Noeud le plus proche : " + noeud) ;
 				System.out.println() ;
-				dessin.setColor(java.awt.Color.red) ;
+				dessin.setColor(java.awt.Color.green) ;
 				dessin.drawPoint(noeud.getLongitude(), noeud.getLatitude(), 5);
 			}
 		}

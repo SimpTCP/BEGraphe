@@ -192,5 +192,15 @@ public class Pcc extends Algo {
 	public Sommet getDestination() {
 		return destination;
 	}
+	
+	public void setOrigine(Sommet s)
+	{
+		this.origine = s;
+	}
 
+	public void setDestination(Sommet s)
+	{
+		this.destination = s;
+	}
+	
 }

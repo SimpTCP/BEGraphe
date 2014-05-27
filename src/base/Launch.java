@@ -39,6 +39,7 @@ public class Launch {
 		System.out.println("8 - Plus court chemin A-star (avec click!)");
 		System.out.println("9 - Plus court chemin A-star (avec click et logfile)");
 		System.out.println("10 - Pcc et PccStar sur les mêmes sommets");
+		System.out.println("11 - Covoit'! (avec click)");
 
 		System.out.println () ;
 	}
@@ -121,6 +122,18 @@ public class Launch {
 					Pcc pcc = new Pcc(graphe, sortie, star.getOrigine(), star.getDestination());
 					sortie.println("Lancement de pcc ...");
 					pcc.run();
+					break;
+					
+				case 11:
+					PrintStream fsortie = new PrintStream("/dev/null");
+					System.out.println("Cliquez pour choisir la voiture ...");
+					Sommet voiture = graphe.situerClick(true);
+					System.out.println("Cliquez pour choisir le pieton ...");
+					Sommet pieton = graphe.situerClick(true);
+					Pcc voiturePieton = new PccStar(graphe, fsortie, voiture, pieton);
+					Chemin c = voiturePieton.run();
+					float cout = c.coutChemin();
+					System.out.println("Cout : "+cout);
 					break;
 					
 				default:
