@@ -2,7 +2,6 @@ package test;
 
 import java.io.DataInputStream;
 import java.io.PrintStream;
-import java.util.Random;
 
 import base.Dessin;
 import base.DessinInvisible;
@@ -25,7 +24,6 @@ public class TestTout {
 			{"carre", "9", "19"},
 			{"carre-dense", "323144", "183927"},
 			{"carre-dense", "1", "19938"},
-			{"fractal", "859597", "611565"},
 			{"fractal", "611565", "512445"},
 			{"midip", "135285", "95173"},
 			{"midip", "135285", "47243"},
@@ -41,6 +39,7 @@ public class TestTout {
 		testTout.go();
 	}
 
+
 	private boolean launchTestPcc(Graphe gr, Sommet haut, Sommet bas)
 	{
 		boolean ret = false;
@@ -51,22 +50,22 @@ public class TestTout {
 		stop = System.currentTimeMillis();
 		this.log("\tPcc time : "+(stop-start)+"ms");
 		
-		Sommet hautBasRandom = hautBasPcc.getSommets().get(new Random().nextInt(hautBasPcc.getNbrNoeuds()));
+		Sommet middle = hautBasPcc.getSommets().get((int) (hautBasPcc.getSommets().size()/2));
 		
 		start = System.currentTimeMillis();
-		Chemin hautRandom = new Pcc(gr, null, haut, hautBasRandom).run();
+		Chemin hautRandom = new Pcc(gr, null, haut, middle).run();
 		stop = System.currentTimeMillis();
 		this.log("\tPcc time : "+(stop-start)+"ms");
 		
 		start = System.currentTimeMillis();
-		Chemin randomBas = new Pcc(gr, null, hautBasRandom, bas).run();
+		Chemin randomBas = new Pcc(gr, null, middle, bas).run();
 		stop = System.currentTimeMillis();
 		this.log("\tPcc time : "+(stop-start)+"ms");
 		
 		this.log("\t x -> y cost : "+ (int) hautBasPcc.coutChemin());
-		this.log("\t x -> a cost : "+ (int) hautRandom.coutChemin());
-		this.log("\t a -> y cost : "+ (int) randomBas.coutChemin());
-		this.log("\t x -> a -> y cost : "+((int) (hautRandom.coutChemin() + randomBas.coutChemin())));
+		this.log("\t x -> middle cost : "+ (int) hautRandom.coutChemin());
+		this.log("\t middle -> y cost : "+ (int) randomBas.coutChemin());
+		this.log("\t x -> middle -> y cost : "+((int) (hautRandom.coutChemin() + randomBas.coutChemin())));
 		
 		if((int) hautBasPcc.coutChemin() == (int) (hautRandom.coutChemin() + randomBas.coutChemin()))
 		{
@@ -85,22 +84,22 @@ public class TestTout {
 		stop = System.currentTimeMillis();
 		this.log("\tPccStar time : "+(stop-start)+"ms");
 		
-		Sommet hautBasRandom = hautBasPcc.getSommets().get(new Random().nextInt(hautBasPcc.getNbrNoeuds()));
+		Sommet middle = hautBasPcc.getSommets().get((int) (hautBasPcc.getSommets().size()/2));
 		
 		start = System.currentTimeMillis();
-		Chemin hautRandom = new PccStar(gr, null, haut, hautBasRandom).run();
+		Chemin hautRandom = new PccStar(gr, null, haut, middle).run();
 		stop = System.currentTimeMillis();
 		this.log("\tPccStar time : "+(stop-start)+"ms");
 		
 		start = System.currentTimeMillis();
-		Chemin randomBas = new PccStar(gr, null, hautBasRandom, bas).run();
+		Chemin randomBas = new PccStar(gr, null, middle, bas).run();
 		stop = System.currentTimeMillis();
 		this.log("\tPccStar time : "+(stop-start)+"ms");
 		
 		this.log("\t x -> y cost : "+ (int) hautBasPcc.coutChemin());
-		this.log("\t x -> a cost : "+ (int) hautRandom.coutChemin());
-		this.log("\t a -> y cost : "+ (int) randomBas.coutChemin());
-		this.log("\t x -> a -> y cost : "+((int) (hautRandom.coutChemin() + randomBas.coutChemin())));
+		this.log("\t x -> middle cost : "+ (int) hautRandom.coutChemin());
+		this.log("\t middle -> y cost : "+ (int) randomBas.coutChemin());
+		this.log("\t x -> middle -> y cost : "+((int) (hautRandom.coutChemin() + randomBas.coutChemin())));
 		
 		if((int) hautBasPcc.coutChemin() == (int) (hautRandom.coutChemin() + randomBas.coutChemin()))
 		{
@@ -114,6 +113,7 @@ public class TestTout {
 			this.askSortie();
 			String last = "";
 			Graphe graphe = null;
+			Dessin dessin = null;
 			for(String[] carte : this.cartes) {
 				
 				this.log("[+] Lancement pour la carte : " + carte[0]);
@@ -122,7 +122,7 @@ public class TestTout {
 				{
 					System.out.println("Loading map ...");
 					DataInputStream mapdata = Openfile.open(carte[0]);
-					Dessin dessin = (this.display) ? new DessinVisible(800,600) : new DessinInvisible();
+					dessin = (this.display) ? new DessinVisible(800,600) : new DessinInvisible();
 					graphe = new Graphe(carte[0], mapdata, dessin);
 					last = carte[0];
 				}
