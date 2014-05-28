@@ -101,7 +101,9 @@ public class Label implements Comparable<Label>{
 	public void setMoi(Sommet moi) {
 		this.moi = moi;
 	}
-	
+	public void addCout(float coutAAjouter){
+		this.cout+=coutAAjouter;
+	}
 	
 	
 }

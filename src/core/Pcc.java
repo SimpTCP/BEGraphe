@@ -50,26 +50,27 @@ public class Pcc extends Algo {
 	public Pcc(Graphe gr, PrintStream fichierSortie, Readarg readarg) {
 		this(gr, readarg);
 		this.sortie = fichierSortie;
+		this.labels = new LabelList<Sommet, Label>();
 	}
 	
-	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination) {
+	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, Sommet destination) {//Constructeur de Djikstra de 1 vers 1 ou de 1 vers tous si destination = null
 		super(graphe, sortie);
 		if(destination != null){
 			destinations = new ArrayList<Sommet>();
-			this.destinations.add(destination);
+			this.destinations.add(destination);//si destinations a un sommet : c'est du 1 vers 1
 		}else{
 			
-			System.out.println("CACA2");
 			destinations = null;
 		}
 		this.origine = source;
 		this.labels = new LabelList<Sommet, Label>();
 		this.tas = new BinaryHeap<Label>();
 	}
-	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, ArrayList<Sommet> destinations){
+	public Pcc(Graphe graphe, PrintStream sortie, Sommet source, ArrayList<Sommet> destinations){//constructeur de djikstra de 1 vers n !! pour n vers 1 c'est dans le run
 		super(graphe, sortie);
 		this.destinations = destinations;
 		this.origine = source;
+		this.labels = new LabelList<Sommet, Label>();
 	}
 
 	private void askSommetsClick()
@@ -96,7 +97,7 @@ public class Pcc extends Algo {
 		return label;
 	}
 	
-	public Chemin run(int vitesse, float coutMax, ArrayList<Label> labelTrue, BinaryHeap<Label> tasRace) {
+	public Chemin run(int vitesse, float coutMax, ArrayList<Label> labelTrue, BinaryHeap<Label> tasRace) {//on run avec vitesse (normal si =0) on renvoit les sommets true dans labelTrue et on part de N si tasrace not null de origine sinon
 		if (coutMax ==0){
 			coutMax = Integer.MAX_VALUE;
 		}
@@ -109,39 +110,45 @@ public class Pcc extends Algo {
 		Sommet filsSommet;
 		Label filsLabel;
 		if(origine !=null){
+			System.out.println(origine);
 			this.createLabelAndPut(this.origine, 0, this.origine, false);
 		}
 		/*if(destinations == null){
 			destinations = new ArrayList<Sommet>();
 			destinations.add(new Sommet());
 		}*/
-		else if(destinations.size() ==1){
-			this.createLabelAndPut(this.destinations.get(0), Integer.MAX_VALUE, null, false);
-		}else{
-			for(Sommet s: destinations){
-				this.createLabelAndPut(s, Integer.MAX_VALUE, null, false);
+		if(destinations !=null && destinations.size() ==1){//si on va vers 1
+			this.createLabelAndPut(this.destinations.get(0), Integer.MAX_VALUE, null, false);//alors le cout de celui vers lequel on va vaut infini + gotas
+		}else if(destinations !=null){
+			for(Sommet s: destinations){//si on va vers n
+				this.createLabelAndPut(s, Integer.MAX_VALUE, null, false);//on ajoute chaque sommet au tas avec un cout infini et une marque false
 			}
+		}else{// si on va vers tous 
+			destinations = new ArrayList<Sommet>();
+			destinations.add(new Sommet());
+			this.createLabelAndPut(destinations.get(0), Integer.MAX_VALUE, null, false);//on ajoute pour destinations un truc qu'on pourra jamais atteindre 
 		}
-		if(tasRace ==null && origine ==null){
+		if(tasRace ==null && origine ==null){//un tasRace non null signifie que l'on donne pleins de sommets de depart: N vers ? !!! mais si on a ni plein ni 1, on part de ou ? oulala
 			System.out.println("Oulala");
 		}
-		else if(tasRace==null){
+		else if(tasRace==null){//si tasRace == null, on part de 1, on suppose qu'on a origine, en avant guinguamp
+			tas = new BinaryHeap<Label>();
 			tas.insert(this.labels.get(origine));
-		}else{
+		}else{// si on prends tasRace, on suppose qu'on part de N et que les marques de tasRace sont a false
 			tas = tasRace;
+			tas.print();
 		}
-		System.out.println(destinations);
-		System.out.println(labels);
-		while(!this.labels.areMark(destinations)/*this.labels.get(destination).isMark()*/ && !tas.isEmpty() && currentLabel.getTotalCout() <=coutMax)
+		System.out.println("ICICICI?");
+		while(!this.labels.areMark(destinations) && !tas.isEmpty() && currentLabel.getTotalCout() <=coutMax)//tant que tas non vide + plus petit que coutMax + il reste des false dans nos destinations
 		{
+			//if(tas.)
 			currentLabel = tas.deleteMin();
 			currentSommet = currentLabel.getMoi();
 			if(labelTrue !=null){
-				labelTrue.add(currentLabel);			
+				labelTrue.add(currentLabel);
 			}
 			currentLabel.setMark(true);
 			nbrSommetMark++;
-
 			// Pour le sommet courant, on prend chacun de ses fils
 			for(Arc arc: currentSommet.getRoutesSortantes()){
 				filsSommet = arc.getDestination();

@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import core.Algo;
 import core.BinaryHeap;
@@ -144,25 +145,51 @@ public class Launch {
 						Sommet pieton = graphe.situerClick(true);
 						System.out.println("Cliquez pour choisir l'endroit ou tu vas que ce soit restaurant, station essence, club echangiste, ou je ne sais quoi d'autre, c'est toi qui vois, tant que ça te fais plaisir c'est ça le plus important ...");
 						Sommet destination = graphe.situerClick(true);
+						//A* de voiture vers pieton
 						Pcc voiturePieton = new PccStar(graphe, fsortie, voiture, pieton);//A* de 1 vers 1
 						Chemin c = voiturePieton.run(0,0, null, null); //on passe coutMax = 0 (pas de condition d'arret en temps + vitesseParcourt = 0 pas de vitesse max a part celle des routes
 						float cout = c.coutChemin(0);
 						System.out.println("Cout : "+cout);
-						//JUSQUE LA OOOK !
-						ArrayList<Label> labelSommetArroundPieton = new ArrayList<Label>();
+						//Djikstra limité de pieton vers tous
+						ArrayList<Label> labelArroundPieton = new ArrayList<Label>();
 						Sommet nulle = null;
 						Pcc cerclePieton= new Pcc(graphe, fsortie, pieton, nulle); //DJISKSTRA de 1 vers tous avec 
-						cerclePieton.run(4,  cout, labelSommetArroundPieton, null);//condition d'arret : stop quand cout >coutMax + parcourt a vitesse 4 + stock les sommets true dans labelSommetArroundPieton
-						BinaryHeap<Label> tasArroundPieton = new BinaryHeap<Label>();
-						for(Label lab: labelSommetArroundPieton){
-							lab.setMark(false);
-							tasArroundPieton.insert(lab);
+						cerclePieton.run(4,  cout, labelArroundPieton, null);//condition d'arret : stop quand cout >coutMax + parcourt a vitesse 4 + stock les sommets true dans labelSommetArroundPieton
+						ArrayList<Sommet> sommetsArroundPieton = new ArrayList<Sommet>();
+						for(Label lab: labelArroundPieton){
+							sommetsArroundPieton.add(lab.getMoi());
 						}
-						//Pcc voiturePieton2 = new Pcc(graphe,fsortie, voiture,  );
-						tasArroundPieton.size();
-						Pcc onYVa = new PccStar(graphe, fsortie, null, destination);
-						onYVa.setTas(tasArroundPieton);
-						//onYVa.run(0, 0, null, tasArroundPieton);
+						//Djikstra de voiture vers les sommetsArroundPieton
+						ArrayList<Label> retourDjikstraVoiture = new ArrayList<Label>();
+						Pcc voiturePieton2 = new Pcc(graphe,fsortie, voiture,  sommetsArroundPieton);//1 vers plein : 1 = voiture pleins = sommetsArroundPieton
+						voiturePieton2.run(0, 0, retourDjikstraVoiture, null);						
+						HashMap<Sommet, Label> tempAddCout = new HashMap<Sommet, Label>();//on s'en sert pour faciliter l'ajout des couts 
+						
+						for(Label l: retourDjikstraVoiture){
+							tempAddCout.put(l.getMoi(), l);
+						}
+						
+
+						for(Label l: labelArroundPieton){//pour chaque entier dans la sphere ArroundPieton
+							l.addCout(tempAddCout.get(l.getMoi()).getCout());//ajoute a l'ancien cout(pieton ->sommet) le nouveau (voiture ->sommet)
+						}
+						
+						//A* de sommetsArroundPieton vers destination
+						//pour ce faire: on créé et passe a run une binaryheap de ArroundPieton
+						BinaryHeap<Label> tiens = new BinaryHeap<Label>();
+						for(Label l: labelArroundPieton){
+							l.setMark(true);
+							l.setPadre(pieton);
+							tiens.insert(l);
+						}
+						Pcc onYVa = new PccStar(graphe, fsortie, pieton, destination);
+						Chemin toc = new Chemin();
+						System.out.println("APARTIRDELA");
+						toc = onYVa.run(0, 0, null, tiens);
+						if(toc !=null){
+							dessin.setColor(Color.black);
+							dessin.drawPoint(toc.getSommets().get(1).getLongitude(), toc.getSommets().get(1).getLatitude(), 10);
+						}
 						break;
 					
 					default:
