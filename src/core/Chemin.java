@@ -17,6 +17,11 @@ public class Chemin {
 		this.sommets = new ArrayList<Sommet>();
 	}
 	
+	public float coutChemin()
+	{
+		return this.coutChemin(0);
+	}
+	
 	public float coutChemin(int vitesse){
 		int k;
 		float cout;

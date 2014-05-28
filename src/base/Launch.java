@@ -196,7 +196,7 @@ public class Launch {
 						System.out.println ("Choix de menu incorrect : " + choix) ;
 						System.exit(1) ;
 					}
-					if (algo != null) { algo.run(0,0, null, null) ; }
+					if (algo != null) { algo.run() ; }
 				}
 
 			System.out.println ("Programme terminé.") ;

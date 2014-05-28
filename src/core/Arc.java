@@ -17,6 +17,10 @@ public class Arc {
 				+ this.tempsParcours(0) + "secondes, getVitesse()=" + getVitesse() + "]";
 	}
 
+	public float tempsParcours()
+	{
+		return this.tempsParcours(0);
+	}
 	
 	// renvoie le temps de parcours en secondes
 	public float tempsParcours(int vitesse){

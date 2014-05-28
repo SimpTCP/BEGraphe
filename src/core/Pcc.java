@@ -97,6 +97,11 @@ public class Pcc extends Algo {
 		return label;
 	}
 	
+	public Chemin run()
+	{
+		return this.run(0,0,null,null);
+	}
+	
 	public Chemin run(int vitesse, float coutMax, ArrayList<Label> labelTrue, BinaryHeap<Label> tasRace) {//on run avec vitesse (normal si =0) on renvoit les sommets true dans labelTrue et on part de N si tasrace not null de origine sinon
 		if (coutMax ==0){
 			coutMax = Integer.MAX_VALUE;

@@ -27,6 +27,8 @@ public class Openfile {
 
 	// et dans le repertoire courant (Unix uniquement)
 	".",
+	"../Maps",
+	"../Paths",
 
 	// Si vous utilisez votre propre dossier pour les donnees, mettez-le ici.
 	"Paths",

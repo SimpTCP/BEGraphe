@@ -11,8 +11,13 @@ public class Connexite extends Algo {
     	super(gr, sortie, readarg) ;
     }
 
-    public Chemin run(int vitesse, float cout, ArrayList<Label>s, BinaryHeap<Label> c) {
+    public Chemin run()
+    {
     	return new Chemin();
+    }
+    
+    public Chemin run(int vitesse, float cout, ArrayList<Label>s, BinaryHeap<Label> c) {
+    	return this.run();
     }
 
 }
