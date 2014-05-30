@@ -3,8 +3,8 @@ package core ;
 import java.awt.Color;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import test.Stats;
 import base.Readarg;
 
 public class Pcc extends Algo {
@@ -222,15 +222,9 @@ public class Pcc extends Algo {
 				this.log("Executé en : "+(stop-start)+"ms");
 				this.log("Nbr sommet visite : "+this.labels.size());
 				this.log("Nbr sommet mark : "+nbrSommetMark);
+				Stats s = new Stats(stop-start, this.labels.size(), nbrSommetMark);
+				c.setStats(s);
 			}
-			int distKm = (int) (c.getDistance()/1000);
-			int heures = (int) (c.coutChemin()/3600);
-			int min = (int) ((c.coutChemin()/3600 - heures)*60);
-			System.out.println(this.origine.getEntierSommet()+" & "+this.destinations.get(0).getEntierSommet() + " & a & a & "+
-					distKm+"km & "+heures+"h"+min+"m & "+(stop-start)+"ms & "+this.labels.size()+" & "+nbrSommetMark);
-			
-			System.out.println(this.origine.getLatitude()+", "+this.origine.getLongitude());
-			System.out.println(this.destinations.get(0).getLatitude()+", "+this.destinations.get(0).getLongitude());
 			
 			return c;
 		}

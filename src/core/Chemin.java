@@ -3,6 +3,7 @@ package core;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import test.Stats;
 import base.Dessin;
 
 public class Chemin {
@@ -12,6 +13,7 @@ public class Chemin {
 	private Sommet source;
 	private Sommet destination;
 	private ArrayList<Sommet> sommets;
+	private Stats stats; // for tests 
 	
 	public Chemin() {
 		this.sommets = new ArrayList<Sommet>();
@@ -84,6 +86,14 @@ public class Chemin {
 		return ret;
 	}
 
+	public Stats getStats()
+	{
+		return this.stats;
+	}
+	public void setStats(Stats s)
+	{
+		this.stats = s;
+	}
 	public int getNbrNoeuds() {
 		return nbrNoeuds;
 	}
