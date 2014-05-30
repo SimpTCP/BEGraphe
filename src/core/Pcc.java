@@ -78,14 +78,13 @@ public class Pcc extends Algo {
 		destinations = new ArrayList<Sommet>();
 		do {
 			System.out.println("Clique pour sommet origine...");
-			this.origine = this.graphe.situerClick(false);
+			this.origine = this.graphe.situerClick(true);
 			System.out.println(this.origine);
 		} while(this.origine.getRoutesSortantes().size() == 0);
 		
 		do {
 			System.out.println("Clique pour sommet destination");
-			
-			this.destinations.add(this.graphe.situerClick(false));
+			this.destinations.add(this.graphe.situerClick(true));
 			System.out.println(this.destinations.get(0));
 		} while(this.destinations.get(0).getRoutesSortantes().size() == 0);
 	}
@@ -224,6 +223,15 @@ public class Pcc extends Algo {
 				this.log("Nbr sommet visite : "+this.labels.size());
 				this.log("Nbr sommet mark : "+nbrSommetMark);
 			}
+			int distKm = (int) (c.getDistance()/1000);
+			int heures = (int) (c.coutChemin()/3600);
+			int min = (int) ((c.coutChemin()/3600 - heures)*60);
+			System.out.println(this.origine.getEntierSommet()+" & "+this.destinations.get(0).getEntierSommet() + " & a & a & "+
+					distKm+"km & "+heures+"h"+min+"m & "+(stop-start)+"ms & "+this.labels.size()+" & "+nbrSommetMark);
+			
+			System.out.println(this.origine.getLatitude()+", "+this.origine.getLongitude());
+			System.out.println(this.destinations.get(0).getLatitude()+", "+this.destinations.get(0).getLongitude());
+			
 			return c;
 		}
 		else if (labelTrue != null){

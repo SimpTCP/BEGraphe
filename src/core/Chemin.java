@@ -39,6 +39,23 @@ public class Chemin {
 		return cout;
 	}
 	
+	public float getDistance()
+	{
+		int i;
+		float ret = 0;
+		Sommet tmpSrc = new Sommet();
+		Sommet tmpDest = new Sommet();
+		Arc tempArc = new Arc();
+		for(i=0; i<this.sommets.size()-1; i++)
+		{
+			tmpSrc = this.sommets.get(i);
+			tmpDest = this.sommets.get(i+1);
+			tempArc = tmpSrc.arcToSommet(tmpDest);
+			ret += tempArc.getLongueur();
+		}
+		return ret;
+	}
+	
 	public void dessinChemin(Dessin dessin){
 		int k;
 		dessin.setColor(Color.pink);
@@ -62,7 +79,7 @@ public class Chemin {
 	@Override
 	public String toString() {
 		String ret = "";
-		ret += "Chemin [cout="+this.coutChemin(0)/60F+"mins, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
+		ret += "Chemin [cout="+this.coutChemin(0)/60F+"mins, distance="+this.getDistance()+"m, nbrNoeuds=" + nbrNoeuds + ", idCarte=" + idCarte
 				+ ", source=" + source + ", destination=" + destination + "]";
 		return ret;
 	}

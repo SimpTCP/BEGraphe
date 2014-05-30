@@ -153,7 +153,7 @@ public class Launch {
 						//Djikstra limité de pieton vers tous
 						ArrayList<Label> labelArroundPieton = new ArrayList<Label>();
 						Sommet nulle = null;
-						Pcc cerclePieton= new Pcc(graphe, fsortie, pieton, nulle); //DJISKSTRA de 1 vers tous avec 
+						Pcc cerclePieton = new Pcc(graphe, fsortie, pieton, nulle); //DJISKSTRA de 1 vers tous avec 
 						cerclePieton.run(4,  cout, labelArroundPieton, null);//condition d'arret : stop quand cout >coutMax + parcourt a vitesse 4 + stock les sommets true dans labelSommetArroundPieton
 						ArrayList<Sommet> sommetsArroundPieton = new ArrayList<Sommet>();
 						for(Label lab: labelArroundPieton){
