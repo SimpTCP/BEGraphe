@@ -2,6 +2,7 @@ package test;
 
 import java.io.DataInputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import base.Dessin;
 import base.DessinInvisible;
@@ -10,10 +11,10 @@ import base.Openfile;
 import base.Readarg;
 import core.Chemin;
 import core.Graphe;
-import core.Pcc;
+import core.PccStar;
 import core.Sommet;
 
-public class TestPcc {
+public class TestPccStar {
 
 	private boolean display = true;
 	private final Readarg readarg;
@@ -30,13 +31,13 @@ public class TestPcc {
 			{"france", "1236634", "1595238"},
 			{"france", "802097", "2203629"}};
 	
-	public TestPcc(String[] args) {
+	public TestPccStar(String[] args) {
 		this.readarg = new Readarg(args);
 	}
 	
 	public static void main(String[] args) {
-		TestPcc testPcc = new TestPcc(args);
-		testPcc.go();
+		TestPccStar testPccStar = new TestPccStar(args);
+		testPccStar.go();
 	}
 	
 	private void go() {
@@ -45,6 +46,7 @@ public class TestPcc {
 			String last = "";
 			Graphe graphe = null;
 			Dessin dessin = null;
+			Scanner sc = new Scanner(System.in);
 			for(String[] carte : this.cartes) {
 				
 				this.log("[+] Lancement pour la carte : " + carte[0]);
@@ -57,11 +59,12 @@ public class TestPcc {
 					graphe = new Graphe(carte[0], mapdata, dessin);
 					last = carte[0];
 				}
-				
+				System.out.println("Wait buuurrrning...");
+				sc.nextLine();
 				Sommet origine = graphe.getSommet(Integer.parseInt(carte[1]));
 				Sommet destination = graphe.getSommet(Integer.parseInt(carte[2]));
 				
-				Chemin c = new Pcc(graphe, null, origine, destination).run();
+				Chemin c = new PccStar(graphe, null, origine, destination).run();
 				int distKm = (int) (c.getDistance()/1000);
 				int heures = (int) (c.coutChemin()/3600);
 				int min = (int) ((c.coutChemin()/3600 - heures)*60);
